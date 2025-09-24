@@ -384,45 +384,10 @@
             font-size: 1.5rem;
             border: 2px solid #ddd;
             border-radius: 8px;
-            margin: 0 5px;
         }
         
         .otp-input:focus {
             border-color: var(--primary-color);
-            outline: none;
-        }
-        
-        .otp-timer {
-            text-align: center;
-            margin: 1rem 0;
-            font-size: 1.1rem;
-            color: var(--dark-color);
-        }
-        
-        .otp-timer.expired {
-            color: var(--danger-color);
-        }
-        
-        .resend-otp {
-            text-align: center;
-            margin-top: 1rem;
-        }
-        
-        .resend-otp button {
-            background: transparent;
-            color: var(--primary-color);
-            border: none;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 1rem;
-            width: auto;
-            padding: 0;
-        }
-        
-        .resend-otp button:disabled {
-            color: #999;
-            cursor: not-allowed;
-            text-decoration: none;
         }
         
         /* نافذة التحقق الأولى */
@@ -455,40 +420,6 @@
         }
         
         .verification-content p {
-            color: #777;
-            margin-bottom: 1.5rem;
-        }
-        
-        /* نافذة OTP */
-        .otp-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        
-        .otp-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        .otp-content h2 {
-            color: var(--dark-color);
-            margin-bottom: 1rem;
-        }
-        
-        .otp-content p {
             color: #777;
             margin-bottom: 1.5rem;
         }
@@ -531,12 +462,6 @@
                 font-size: 1.5rem;
                 cursor: pointer;
             }
-            
-            .otp-input {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
         }
     </style>
 </head>
@@ -560,35 +485,6 @@
             <button id="verify-access">
                 <i class="fas fa-check"></i> تأكيد والمتابعة
             </button>
-        </div>
-    </div>
-
-    <!-- نافذة OTP -->
-    <div id="otp-modal" class="otp-modal hidden">
-        <div class="otp-content">
-            <h2><i class="fas fa-mobile-alt"></i> التحقق بخطوتين</h2>
-            <p>تم إرسال رمز التحقق إلى هاتفك المحمول. أدخل الرمز المكون من 6 أرقام للمتابعة.</p>
-            
-            <div class="otp-container">
-                <input type="text" class="otp-input" maxlength="1" id="otp1">
-                <input type="text" class="otp-input" maxlength="1" id="otp2">
-                <input type="text" class="otp-input" maxlength="1" id="otp3">
-                <input type="text" class="otp-input" maxlength="1" id="otp4">
-                <input type="text" class="otp-input" maxlength="1" id="otp5">
-                <input type="text" class="otp-input" maxlength="1" id="otp6">
-            </div>
-            
-            <div class="otp-timer" id="otp-timer">الرمز صالح لمدة: <span id="timer">05:00</span></div>
-            
-            <div class="resend-otp">
-                <button id="resend-otp" disabled>إعادة إرسال الرمز (<span id="resend-timer">60</span> ثانية)</button>
-            </div>
-            
-            <button id="verify-otp">
-                <i class="fas fa-check"></i> تأكيد الرمز
-            </button>
-            
-            <small id="otp-error" class="alert-danger hidden"></small>
         </div>
     </div>
 
@@ -655,7 +551,6 @@
                                 <li>الحماية من هجمات القوة الغاشمة</li>
                                 <li>التحقق من صحة المدخلات على الخادم والعميل</li>
                                 <li>حماية من هجمات XSS و SQL Injection</li>
-                                <li>التحقق بخطوتين عبر OTP</li>
                             </ul>
                         </div>
                     </div>
@@ -874,11 +769,6 @@
             return captcha;
         }
         
-        // توليد رمز OTP عشوائي مكون من 6 أرقام
-        function generateOTP() {
-            return Math.floor(100000 + Math.random() * 900000).toString();
-        }
-        
         // تهيئة CAPTCHA للنافذة الأولى
         document.getElementById('initial-captcha-text').textContent = generateCaptcha();
         document.getElementById('captcha-text').textContent = generateCaptcha();
@@ -1089,122 +979,7 @@
             showPage('login');
         });
         
-        // متغيرات OTP
-        let currentOTP = '';
-        let otpTimer;
-        let resendTimer;
-        let otpExpiryTime;
-        
-        // إرسال OTP
-        function sendOTP(phone) {
-            // توليد رمز OTP جديد
-            currentOTP = generateOTP();
-            
-            // محاكاة إرسال OTP إلى الهاتف
-            console.log(`تم إرسال رمز OTP إلى ${phone}: ${currentOTP}`);
-            alert(`تم إرسال رمز التحقق إلى هاتفك: ${currentOTP} (هذه رسالة تجريبية)`);
-            
-            // تعيين وقت انتهاء صلاحية OTP (5 دقائق)
-            otpExpiryTime = Date.now() + 5 * 60 * 1000;
-            
-            // بدء عداد الوقت
-            startOTPTimer();
-            
-            // تعطيل زر إعادة الإرسال لمدة 60 ثانية
-            document.getElementById('resend-otp').disabled = true;
-            startResendTimer();
-        }
-        
-        // بدء عداد الوقت لـ OTP
-        function startOTPTimer() {
-            clearInterval(otpTimer);
-            
-            otpTimer = setInterval(function() {
-                const now = Date.now();
-                const timeLeft = otpExpiryTime - now;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(otpTimer);
-                    document.getElementById('otp-timer').innerHTML = 'انتهت صلاحية الرمز';
-                    document.getElementById('otp-timer').classList.add('expired');
-                    return;
-                }
-                
-                const minutes = Math.floor(timeLeft / 60000);
-                const seconds = Math.floor((timeLeft % 60000) / 1000);
-                
-                document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
-        }
-        
-        // بدء عداد الوقت لإعادة الإرسال
-        function startResendTimer() {
-            let timeLeft = 60;
-            document.getElementById('resend-timer').textContent = timeLeft;
-            
-            clearInterval(resendTimer);
-            
-            resendTimer = setInterval(function() {
-                timeLeft--;
-                document.getElementById('resend-timer').textContent = timeLeft;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(resendTimer);
-                    document.getElementById('resend-otp').disabled = false;
-                    document.getElementById('resend-otp').textContent = 'إعادة إرسال الرمز';
-                }
-            }, 1000);
-        }
-        
-        // إعادة إرسال OTP
-        document.getElementById('resend-otp').addEventListener('click', function() {
-            const phone = document.getElementById('phone').value || 'هاتف المستخدم';
-            sendOTP(phone);
-        });
-        
-        // التحقق من OTP
-        document.getElementById('verify-otp').addEventListener('click', function() {
-            const otp1 = document.getElementById('otp1').value;
-            const otp2 = document.getElementById('otp2').value;
-            const otp3 = document.getElementById('otp3').value;
-            const otp4 = document.getElementById('otp4').value;
-            const otp5 = document.getElementById('otp5').value;
-            const otp6 = document.getElementById('otp6').value;
-            
-            const enteredOTP = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
-            
-            // إخفاء رسالة الخطأ السابقة
-            document.getElementById('otp-error').classList.add('hidden');
-            
-            // التحقق من اكتمال الرمز
-            if (enteredOTP.length !== 6) {
-                document.getElementById('otp-error').textContent = 'الرجاء إدخال الرمز المكون من 6 أرقام';
-                document.getElementById('otp-error').classList.remove('hidden');
-                return;
-            }
-            
-            // التحقق من صحة الرمز
-            if (enteredOTP !== currentOTP) {
-                document.getElementById('otp-error').textContent = 'رمز التحقق غير صحيح، يرجى المحاولة مرة أخرى';
-                document.getElementById('otp-error').classList.remove('hidden');
-                return;
-            }
-            
-            // التحقق من انتهاء صلاحية الرمز
-            if (Date.now() > otpExpiryTime) {
-                document.getElementById('otp-error').textContent = 'انتهت صلاحية الرمز، يرجى طلب رمز جديد';
-                document.getElementById('otp-error').classList.remove('hidden');
-                return;
-            }
-            
-            // نجاح التحقق
-            clearInterval(otpTimer);
-            document.getElementById('otp-modal').classList.add('hidden');
-            alert('تم التحقق بنجاح! تم تسجيل الدخول إلى حسابك.');
-            // في التطبيق الحقيقي، سيتم توجيه المستخدم إلى صفحة الملف الشخصي
-        });
-        
-        // معالجة تسجيل الدخول مع OTP
+        // معالجة تسجيل الدخول
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1223,38 +998,9 @@
                 return;
             }
             
-            // محاكاة التحقق من بيانات المستخدم
-            // في التطبيق الحقيقي، سيتم التحقق من قاعدة البيانات
-            
-            // إظهار نافذة OTP
-            document.getElementById('otp-modal').classList.remove('hidden');
-            
-            // إرسال OTP (محاكاة)
-            sendOTP('هاتف المستخدم');
-            
-            // تهيئة حقول OTP
-            const otpInputs = document.querySelectorAll('.otp-input');
-            otpInputs.forEach((input, index) => {
-                input.value = '';
-                input.addEventListener('input', function(e) {
-                    if (this.value.length === 1) {
-                        if (index < otpInputs.length - 1) {
-                            otpInputs[index + 1].focus();
-                        }
-                    }
-                });
-                
-                input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Backspace' && this.value.length === 0) {
-                        if (index > 0) {
-                            otpInputs[index - 1].focus();
-                        }
-                    }
-                });
-            });
-            
-            // التركيز على أول حقل
-            otpInputs[0].focus();
+            // محاكاة تسجيل الدخول الناجح
+            alert('تم تسجيل الدخول بنجاح!');
+            // في التطبيق الحقيقي، سيتم توجيه المستخدم إلى صفحة الملف الشخصي
         });
         
         // تحقق من صحة البريد الإلكتروني
