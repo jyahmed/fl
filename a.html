@@ -3,185 +3,978 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سياسة حذف الحساب - رَهَا ديلفري</title>
+    <title>نظام إدارة الحسابات الآمن</title>
     <style>
-        /* --- Google Fonts --- */
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap' );
-
-        /* --- General Styles --- */
-        body {
-            font-family: 'Cairo', sans-serif;
-            line-height: 1.8;
-            color: #333;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            text-align: right; /* Default to right alignment for Arabic */
-        }
-
-        /* --- Container --- */
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px 30px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
-        }
-
-        /* --- Header --- */
-        .header {
-            text-align: center;
-            border-bottom: 1px solid #e9ecef;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: #153A6B; /* Main app color */
-            font-weight: 700;
-            font-size: 2.2em;
-            margin: 0;
-        }
-
-        .header p {
-            color: #6c757d;
-            font-size: 1.1em;
-            margin-top: 5px;
-        }
-
-        /* --- Section Styles --- */
-        h2 {
-            color: #153A6B;
-            font-weight: 600;
-            font-size: 1.6em;
-            margin-top: 35px;
-            margin-bottom: 15px;
-            border-right: 4px solid #7EE6F3; /* Accent color */
-            padding-right: 15px;
-        }
-
-        p, li {
-            font-size: 1.1em;
-            color: #495057;
-        }
-
-        ul {
-            list-style-type: none;
-            padding-right: 20px;
-        }
-
-        ul li {
-            position: relative;
-            padding-right: 25px;
-            margin-bottom: 10px;
-        }
-
-        ul li::before {
-            content: '•';
-            position: absolute;
-            right: 0;
-            color: #153A6B;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        /* --- Special Notes & Warnings --- */
-        .note {
-            background-color: #e9f7fd;
-            border: 1px solid #bde0fe;
-            border-right: 5px solid #007bff;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin: 25px 0;
-        }
-
-        .warning {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            border-right: 5px solid #ffc107;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin: 25px 0;
-        }
-
-        strong {
-            font-weight: 600;
-            color: #d9534f; /* Red for emphasis on permanent action */
-        }
-
-        /* --- Footer --- */
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
-            font-size: 0.9em;
-            color: #6c757d;
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
         }
         
-        .footer a {
-            color: #153A6B;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
             text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .main-content {
+            padding: 2rem 0;
+            min-height: calc(100vh - 140px);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
             font-weight: 600;
         }
-
-        .footer a:hover {
-            text-decoration: underline;
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .captcha-container {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .captcha-text {
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: #eee;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <div class="header">
-            <h1>سياسة حذف الحساب</h1>
-            <p>تطبيق رَهَا ديلفري</p>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">نظام الحسابات الآمن</div>
+                <ul class="nav-links">
+                    <li><a href="#" id="home-link">الرئيسية</a></li>
+                    <li><a href="#" id="register-link">إنشاء حساب</a></li>
+                    <li><a href="#" id="login-link">تسجيل الدخول</a></li>
+                    <li><a href="#" id="profile-link" class="hidden">حسابي</a></li>
+                    <li><a href="#" id="logout-link" class="hidden">تسجيل الخروج</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <p>
-            نحن في "رَهَا ديلفري" نحترم خصوصيتك وحقك في التحكم ببياناتك. توضح هذه الصفحة الإجراءات المتبعة عند طلب حذف حسابك والبيانات المرتبطة به.
-        </p>
+    <div class="main-content">
+        <div class="container">
+            <!-- الصفحة الرئيسية -->
+            <div id="home-page" class="card">
+                <h1>مرحباً بك في نظام إدارة الحسابات الآمن</h1>
+                <p>هذا النظام مصمم لتطبيق أفضل ممارسات الأمن السيبراني لحماية حسابات المستخدمين.</p>
+                <p>الميزات المتوفرة:</p>
+                <ul>
+                    <li>إنشاء حساب جديد مع التحقق من البريد الإلكتروني والهاتف</li>
+                    <li>تسجيل الدخول الآمن مع CAPTCHA وحماية من الهجمات</li>
+                    <li>إدارة الحساب الشخصي وتحديث المعلومات</li>
+                    <li>تغيير كلمة المرور وحذف الحساب</li>
+                </ul>
+            </div>
 
-        <div class="warning">
-            <strong>تنبيه هام:</strong> عملية حذف الحساب نهائية ولا يمكن التراجع عنها. بمجرد تأكيد الحذف، ستفقد الوصول إلى حسابك وجميع البيانات المرتبطة به بشكل دائم.
-        </div>
+            <!-- نموذج إنشاء حساب -->
+            <div id="register-page" class="card hidden">
+                <h2>إنشاء حساب جديد</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="username">اسم المستخدم:</label>
+                        <input type="text" id="username" name="username" required>
+                        <small id="username-error" class="alert-danger hidden"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني:</label>
+                        <input type="email" id="email" name="email" required>
+                        <small id="email-error" class="alert-danger hidden"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">رقم الهاتف:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                        <small id="phone-error" class="alert-danger hidden"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">كلمة المرور:</label>
+                        <input type="password" id="password" name="password" required>
+                        <small>يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، وتشمل حروف كبيرة وصغيرة وأرقاماً</small>
+                        <small id="password-error" class="alert-danger hidden"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">تأكيد كلمة المرور:</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                        <small id="confirm-password-error" class="alert-danger hidden"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profile-picture">الصورة الشخصية:</label>
+                        <input type="file" id="profile-picture" name="profile-picture" accept="image/*">
+                        <small>يجب أن تكون الصورة بحجم أقل من 2MB وبصيغة JPG أو PNG</small>
+                        <small id="picture-error" class="alert-danger hidden"></small>
+                    </div>
+                    
+                    <div class="captcha-container">
+                        <div class="captcha-text" id="captcha-text">A1B2C3</div>
+                        <label for="captcha-input">أدخل النص أعلاه:</label>
+                        <input type="text" id="captcha-input" name="captcha" required>
+                        <button type="button" id="refresh-captcha">تحديث CAPTCHA</button>
+                        <small id="captcha-error" class="alert-danger hidden"></small>
+                    </div>
+                    
+                    <button type="submit">إنشاء الحساب</button>
+                </form>
+            </div>
 
-        <h2>كيفية طلب حذف حسابك</h2>
-        <p>يمكنك طلب حذف حسابك مباشرة من داخل التطبيق باتباع الخطوات التالية:</p>
-        <ol>
-            <li>اذهب إلى صفحة <strong>"الملف الشخصي"</strong>.</li>
-            <li>اضغط على خيار <strong>"إعدادات الحساب"</strong>.</li>
-            <li>اختر <strong>"حذف الحساب"</strong> واتبع التعليمات التي تظهر على الشاشة.</li>
-        </ol>
+            <!-- نموذج تسجيل الدخول -->
+            <div id="login-page" class="card hidden">
+                <h2>تسجيل الدخول</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">اسم المستخدم أو البريد الإلكتروني:</label>
+                        <input type="text" id="login-username" name="login-username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">كلمة المرور:</label>
+                        <input type="password" id="login-password" name="login-password" required>
+                    </div>
+                    
+                    <div class="captcha-container">
+                        <div class="captcha-text" id="login-captcha-text">X7Y8Z9</div>
+                        <label for="login-captcha-input">أدخل النص أعلاه:</label>
+                        <input type="text" id="login-captcha-input" name="login-captcha" required>
+                        <button type="button" id="refresh-login-captcha">تحديث CAPTCHA</button>
+                        <small id="login-captcha-error" class="alert-danger hidden"></small>
+                    </div>
+                    
+                    <button type="submit">تسجيل الدخول</button>
+                </form>
+            </div>
 
-        <h2>ما هي البيانات التي سيتم حذفها؟</h2>
-        <p>عند تأكيد طلب حذف حسابك، سنقوم بحذف البيانات الشخصية التالية بشكل دائم من قواعد بياناتنا النشطة:</p>
-        <ul>
-            <li><strong>معلومات الملف الشخصي:</strong> اسمك الكامل ورقم هاتفك.</li>
-            <li><strong>بيانات الموقع:</strong> عنوانك المحفوظ ومواقع التوصيل التي استخدمتها.</li>
-            <li><strong>سجل الطلبات:</strong> جميع تفاصيل طلباتك السابقة، بما في ذلك المنتجات والأسعار.</li>
-        </ul>
-
-        <h2>البيانات التي قد نحتفظ بها مؤقتًا</h2>
-        <p>
-            قد نحتفظ ببعض البيانات المجهولة المصدر (Anonymous Data) لأغراض تحليلية وإحصائية لتحسين خدماتنا. هذه البيانات لا يمكن ربطها بك شخصيًا بأي شكل من الأشكال. كما قد نحتفظ بسجلات معينة لفترة محدودة إذا كان ذلك مطلوبًا بموجب القانون أو لأسباب أمنية مشروعة (مثل التحقيق في عمليات احتيال).
-        </p>
-
-        <div class="note">
-            <strong>فترة المعالجة:</strong> قد تستغرق عملية الحذف الكامل لبياناتك من جميع أنظمتنا، بما في ذلك النسخ الاحتياطية، فترة تصل إلى 30 يومًا من تاريخ طلبك. خلال هذه الفترة، لن يكون حسابك قابلاً للوصول.
-        </div>
-
-        <h2>هل لديك أسئلة؟</h2>
-        <p>
-            إذا كانت لديك أي استفسارات بخصوص عملية حذف الحساب أو بياناتك الشخصية، لا تتردد في التواصل معنا عبر البريد الإلكتروني: <a href="mailto:support@rahadelivery.com">support@rahadelivery.com</a>
-        </p>
-
-        <div class="footer">
-            <p>آخر تحديث: 24 سبتمبر 2025</p>
-            <p>&copy; 2025 <a href="https://rahadelivery.netlify.app/">رَهَا ديلفري</a>. جميع الحقوق محفوظة.</p>
+            <!-- صفحة الملف الشخصي -->
+            <div id="profile-page" class="card hidden">
+                <h2>إدارة الحساب</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="profile-info">المعلومات الشخصية</div>
+                    <div class="tab" data-tab="change-password">تغيير كلمة المرور</div>
+                    <div class="tab" data-tab="delete-account">حذف الحساب</div>
+                </div>
+                
+                <!-- معلومات الحساب -->
+                <div id="profile-info" class="tab-content active">
+                    <div style="text-align: center;">
+                        <img src="" alt="الصورة الشخصية" class="profile-img" id="profile-picture-display">
+                    </div>
+                    
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="profile-username">اسم المستخدم:</label>
+                            <input type="text" id="profile-username" name="profile-username" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profile-email">البريد الإلكتروني:</label>
+                            <input type="email" id="profile-email" name="profile-email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profile-phone">رقم الهاتف:</label>
+                            <input type="tel" id="profile-phone" name="profile-phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new-profile-picture">تغيير الصورة الشخصية:</label>
+                            <input type="file" id="new-profile-picture" name="new-profile-picture" accept="image/*">
+                            <small>يجب أن تكون الصورة بحجم أقل من 2MB وبصيغة JPG أو PNG</small>
+                        </div>
+                        
+                        <button type="submit">حفظ التغييرات</button>
+                    </form>
+                </div>
+                
+                <!-- تغيير كلمة المرور -->
+                <div id="change-password" class="tab-content">
+                    <form id="change-password-form">
+                        <div class="form-group">
+                            <label for="current-password">كلمة المرور الحالية:</label>
+                            <input type="password" id="current-password" name="current-password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new-password">كلمة المرور الجديدة:</label>
+                            <input type="password" id="new-password" name="new-password" required>
+                            <small>يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، وتشمل حروف كبيرة وصغيرة وأرقاماً</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm-new-password">تأكيد كلمة المرور الجديدة:</label>
+                            <input type="password" id="confirm-new-password" name="confirm-new-password" required>
+                        </div>
+                        
+                        <button type="submit">تغيير كلمة المرور</button>
+                    </form>
+                </div>
+                
+                <!-- حذف الحساب -->
+                <div id="delete-account" class="tab-content">
+                    <div class="alert alert-danger">
+                        <h3>تحذير: هذه العملية لا يمكن التراجع عنها</h3>
+                        <p>سيتم حذف حسابك وكل بياناتك بشكل نهائي.</p>
+                    </div>
+                    
+                    <form id="delete-account-form">
+                        <div class="form-group">
+                            <label for="delete-password">أدخل كلمة المرور للتأكيد:</label>
+                            <input type="password" id="delete-password" name="delete-password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn-danger">حذف الحساب نهائياً</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
+    <footer>
+        <div class="container">
+            <p>نظام إدارة الحسابات الآمن &copy; 2023 - تطبيق ممارسات أمن الويب</p>
+        </div>
+    </footer>
+
+    <script>
+        // عناصر DOM
+        const homePage = document.getElementById('home-page');
+        const registerPage = document.getElementById('register-page');
+        const loginPage = document.getElementById('login-page');
+        const profilePage = document.getElementById('profile-page');
+        
+        const homeLink = document.getElementById('home-link');
+        const registerLink = document.getElementById('register-link');
+        const loginLink = document.getElementById('login-link');
+        const profileLink = document.getElementById('profile-link');
+        const logoutLink = document.getElementById('logout-link');
+        
+        const registerForm = document.getElementById('register-form');
+        const loginForm = document.getElementById('login-form');
+        const profileForm = document.getElementById('profile-form');
+        const changePasswordForm = document.getElementById('change-password-form');
+        const deleteAccountForm = document.getElementById('delete-account-form');
+        
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // توليد CAPTCHA عشوائي
+        function generateCaptcha() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return captcha;
+        }
+        
+        // تحديث CAPTCHA
+        document.getElementById('refresh-captcha').addEventListener('click', function() {
+            document.getElementById('captcha-text').textContent = generateCaptcha();
+        });
+        
+        document.getElementById('refresh-login-captcha').addEventListener('click', function() {
+            document.getElementById('login-captcha-text').textContent = generateCaptcha();
+        });
+        
+        // تهيئة CAPTCHA عند تحميل الصفحة
+        document.getElementById('captcha-text').textContent = generateCaptcha();
+        document.getElementById('login-captcha-text').textContent = generateCaptcha();
+        
+        // التنقل بين الصفحات
+        homeLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showPage('home');
+        });
+        
+        registerLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showPage('register');
+        });
+        
+        loginLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showPage('login');
+        });
+        
+        profileLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showPage('profile');
+        });
+        
+        logoutLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            logout();
+        });
+        
+        // إظهار الصفحة المحددة
+        function showPage(page) {
+            homePage.classList.add('hidden');
+            registerPage.classList.add('hidden');
+            loginPage.classList.add('hidden');
+            profilePage.classList.add('hidden');
+            
+            if (page === 'home') {
+                homePage.classList.remove('hidden');
+            } else if (page === 'register') {
+                registerPage.classList.remove('hidden');
+            } else if (page === 'login') {
+                loginPage.classList.remove('hidden');
+            } else if (page === 'profile') {
+                profilePage.classList.remove('hidden');
+                // هنا سنقوم بتحميل بيانات المستخدم
+                loadUserProfile();
+            }
+        }
+        
+        // تسجيل الخروج
+        function logout() {
+            // مسح بيانات الجلسة (في التطبيق الحقيقي، سيتم مسح التوكنات والكوكيز)
+            localStorage.removeItem('currentUser');
+            profileLink.classList.add('hidden');
+            logoutLink.classList.add('hidden');
+            registerLink.classList.remove('hidden');
+            loginLink.classList.remove('hidden');
+            showPage('home');
+        }
+        
+        // إدارة التبويبات في صفحة الملف الشخصي
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // تحقق من صحة كلمة المرور
+        function validatePassword(password) {
+            const minLength = 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+            
+            return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers;
+        }
+        
+        // تحقق من صحة البريد الإلكتروني
+        function validateEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+        
+        // تحقق من صحة رقم الهاتف
+        function validatePhone(phone) {
+            const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+            return re.test(String(phone));
+        }
+        
+        // تحقق من صحة الصورة
+        function validateImage(file) {
+            if (!file) return true; // الصورة اختيارية
+            
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            const maxSize = 2 * 1024 * 1024; // 2MB
+            
+            if (!allowedTypes.includes(file.type)) {
+                return 'نوع الملف غير مسموح به. يرجى استخدام صيغة JPG أو PNG.';
+            }
+            
+            if (file.size > maxSize) {
+                return 'حجم الملف كبير جداً. الحد الأقصى هو 2MB.';
+            }
+            
+            return null;
+        }
+        
+        // معالجة إنشاء الحساب
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // جمع البيانات من النموذج
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const profilePicture = document.getElementById('profile-picture').files[0];
+            const captchaInput = document.getElementById('captcha-input').value;
+            const captchaText = document.getElementById('captcha-text').textContent;
+            
+            // إخفاء رسائل الخطأ السابقة
+            document.querySelectorAll('.alert-danger').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            let isValid = true;
+            
+            // التحقق من CAPTCHA
+            if (captchaInput !== captchaText) {
+                document.getElementById('captcha-error').textContent = 'رمز التحقق غير صحيح';
+                document.getElementById('captcha-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // التحقق من اسم المستخدم
+            if (username.length < 3) {
+                document.getElementById('username-error').textContent = 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل';
+                document.getElementById('username-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // التحقق من البريد الإلكتروني
+            if (!validateEmail(email)) {
+                document.getElementById('email-error').textContent = 'البريد الإلكتروني غير صحيح';
+                document.getElementById('email-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // التحقق من رقم الهاتف
+            if (!validatePhone(phone)) {
+                document.getElementById('phone-error').textContent = 'رقم الهاتف غير صحيح';
+                document.getElementById('phone-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // التحقق من كلمة المرور
+            if (!validatePassword(password)) {
+                document.getElementById('password-error').textContent = 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل، وتشمل حروف كبيرة وصغيرة وأرقاماً';
+                document.getElementById('password-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // التحقق من تطابق كلمتي المرور
+            if (password !== confirmPassword) {
+                document.getElementById('confirm-password-error').textContent = 'كلمتا المرور غير متطابقتين';
+                document.getElementById('confirm-password-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            // التحقق من الصورة
+            const imageError = validateImage(profilePicture);
+            if (imageError) {
+                document.getElementById('picture-error').textContent = imageError;
+                document.getElementById('picture-error').classList.remove('hidden');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // هنا في التطبيق الحقيقي، سيتم إرسال البيانات إلى الخادم
+            // سنقوم بمحاكاة ذلك بتخزين البيانات في localStorage
+            
+            // التحقق من عدم وجود حساب مكرر
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const existingUser = users.find(u => u.username === username || u.email === email);
+            
+            if (existingUser) {
+                if (existingUser.username === username) {
+                    document.getElementById('username-error').textContent = 'اسم المستخدم موجود مسبقاً';
+                    document.getElementById('username-error').classList.remove('hidden');
+                } else {
+                    document.getElementById('email-error').textContent = 'البريد الإلكتروني موجود مسبقاً';
+                    document.getElementById('email-error').classList.remove('hidden');
+                }
+                return;
+            }
+            
+            // تشفير كلمة المرور (في التطبيق الحقيقي، سيتم استخدام bcrypt/argon2 على الخادم)
+            // هنا سنقوم بمحاكاة التشفير باستخدام btoa (في التطبيق الحقيقي لا تستخدم هذا!)
+            const hashedPassword = btoa(password); // هذا لأغراض العرض فقط، غير آمن للاستخدام الفعلي
+            
+            // معالجة الصورة (في التطبيق الحقيقي، سيتم معالجتها على الخادم)
+            let pictureData = null;
+            if (profilePicture) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    pictureData = e.target.result;
+                    
+                    // حفظ المستخدم
+                    const newUser = {
+                        id: Date.now(),
+                        username,
+                        email,
+                        phone,
+                        password: hashedPassword,
+                        profilePicture: pictureData,
+                        isActive: false,
+                        otp: Math.floor(100000 + Math.random() * 900000).toString(), // رمز OTP عشوائي
+                        failedLoginAttempts: 0,
+                        lockUntil: null
+                    };
+                    
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    
+                    // محاكاة إرسال رمز التفعيل
+                    alert(`تم إرسال رمز التفعيل إلى بريدك الإلكتروني: ${newUser.otp}`);
+                    
+                    // الانتقال إلى صفحة تسجيل الدخول
+                    showPage('login');
+                };
+                reader.readAsDataURL(profilePicture);
+            } else {
+                // حفظ المستخدم بدون صورة
+                const newUser = {
+                    id: Date.now(),
+                    username,
+                    email,
+                    phone,
+                    password: hashedPassword,
+                    profilePicture: null,
+                    isActive: false,
+                    otp: Math.floor(100000 + Math.random() * 900000).toString(), // رمز OTP عشوائي
+                    failedLoginAttempts: 0,
+                    lockUntil: null
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // محاكاة إرسال رمز التفعيل
+                alert(`تم إرسال رمز التفعيل إلى بريدك الإلكتروني: ${newUser.otp}`);
+                
+                // الانتقال إلى صفحة تسجيل الدخول
+                showPage('login');
+            }
+        });
+        
+        // معالجة تسجيل الدخول
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const loginIdentifier = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const captchaInput = document.getElementById('login-captcha-input').value;
+            const captchaText = document.getElementById('login-captcha-text').textContent;
+            
+            // إخفاء رسائل الخطأ السابقة
+            document.getElementById('login-captcha-error').classList.add('hidden');
+            
+            // التحقق من CAPTCHA
+            if (captchaInput !== captchaText) {
+                document.getElementById('login-captcha-error').textContent = 'رمز التحقق غير صحيح';
+                document.getElementById('login-captcha-error').classList.remove('hidden');
+                return;
+            }
+            
+            // البحث عن المستخدم
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.username === loginIdentifier || u.email === loginIdentifier);
+            
+            if (!user) {
+                alert('اسم المستخدم أو البريد الإلكتروني غير صحيح');
+                return;
+            }
+            
+            // التحقق من تفعيل الحساب
+            if (!user.isActive) {
+                const otp = prompt('الحساب غير مفعل. أدخل رمز التفعيل الذي تم إرساله إليك:');
+                if (otp === user.otp) {
+                    user.isActive = true;
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alert('تم تفعيل الحساب بنجاح! يمكنك الآن تسجيل الدخول.');
+                } else {
+                    alert('رمز التفعيل غير صحيح');
+                    return;
+                }
+            }
+            
+            // التحقق من قفل الحساب
+            if (user.lockUntil && Date.now() < user.lockUntil) {
+                const remainingTime = Math.ceil((user.lockUntil - Date.now()) / 60000);
+                alert(`الحساب مؤقتاً معطل. يرجى المحاولة بعد ${remainingTime} دقيقة.`);
+                return;
+            }
+            
+            // التحقق من كلمة المرور (في التطبيق الحقيقي، سيتم استخدام bcrypt/argon2 على الخادم)
+            const hashedPassword = btoa(password); // هذا لأغراض العرض فقط
+            
+            if (user.password !== hashedPassword) {
+                user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 1;
+                
+                if (user.failedLoginAttempts >= 5) {
+                    user.lockUntil = Date.now() + (15 * 60 * 1000); // قفل لمدة 15 دقيقة
+                    alert('تم تجاوز عدد المحاولات المسموح بها. الحساب معطل مؤقتاً لمدة 15 دقيقة.');
+                } else {
+                    alert(`كلمة المرور غير صحيحة. لديك ${5 - user.failedLoginAttempts} محاولات متبقية.`);
+                }
+                
+                localStorage.setItem('users', JSON.stringify(users));
+                return;
+            }
+            
+            // تسجيل الدخول الناجح
+            user.failedLoginAttempts = 0;
+            user.lockUntil = null;
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            // تحديث واجهة المستخدم
+            profileLink.classList.remove('hidden');
+            logoutLink.classList.remove('hidden');
+            registerLink.classList.add('hidden');
+            loginLink.classList.add('hidden');
+            
+            showPage('profile');
+        });
+        
+        // تحميل بيانات الملف الشخصي
+        function loadUserProfile() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                showPage('home');
+                return;
+            }
+            
+            document.getElementById('profile-username').value = currentUser.username;
+            document.getElementById('profile-email').value = currentUser.email;
+            document.getElementById('profile-phone').value = currentUser.phone;
+            
+            if (currentUser.profilePicture) {
+                document.getElementById('profile-picture-display').src = currentUser.profilePicture;
+            }
+        }
+        
+        // تحديث الملف الشخصي
+        profileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) return;
+            
+            const email = document.getElementById('profile-email').value;
+            const phone = document.getElementById('profile-phone').value;
+            const newProfilePicture = document.getElementById('new-profile-picture').files[0];
+            
+            // التحقق من البريد الإلكتروني
+            if (!validateEmail(email)) {
+                alert('البريد الإلكتروني غير صحيح');
+                return;
+            }
+            
+            // التحقق من رقم الهاتف
+            if (!validatePhone(phone)) {
+                alert('رقم الهاتف غير صحيح');
+                return;
+            }
+            
+            // تحديث البيانات
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            
+            if (userIndex !== -1) {
+                users[userIndex].email = email;
+                users[userIndex].phone = phone;
+                
+                // تحديث الصورة إذا تم تحميل واحدة جديدة
+                if (newProfilePicture) {
+                    const imageError = validateImage(newProfilePicture);
+                    if (imageError) {
+                        alert(imageError);
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        users[userIndex].profilePicture = e.target.result;
+                        currentUser.profilePicture = e.target.result;
+                        
+                        localStorage.setItem('users', JSON.stringify(users));
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        
+                        document.getElementById('profile-picture-display').src = e.target.result;
+                        alert('تم تحديث البيانات بنجاح');
+                    };
+                    reader.readAsDataURL(newProfilePicture);
+                } else {
+                    localStorage.setItem('users', JSON.stringify(users));
+                    currentUser.email = email;
+                    currentUser.phone = phone;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    alert('تم تحديث البيانات بنجاح');
+                }
+            }
+        });
+        
+        // تغيير كلمة المرور
+        changePasswordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) return;
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+            
+            // التحقق من كلمة المرور الحالية
+            const hashedCurrentPassword = btoa(currentPassword);
+            if (hashedCurrentPassword !== currentUser.password) {
+                alert('كلمة المرور الحالية غير صحيحة');
+                return;
+            }
+            
+            // التحقق من كلمة المرور الجديدة
+            if (!validatePassword(newPassword)) {
+                alert('كلمة المرور الجديدة يجب أن تحتوي على 8 أحرف على الأقل، وتشمل حروف كبيرة وصغيرة وأرقاماً');
+                return;
+            }
+            
+            // التحقق من تطابق كلمتي المرور الجديدتين
+            if (newPassword !== confirmNewPassword) {
+                alert('كلمتا المرور غير متطابقتين');
+                return;
+            }
+            
+            // تحديث كلمة المرور
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            
+            if (userIndex !== -1) {
+                users[userIndex].password = btoa(newPassword);
+                currentUser.password = btoa(newPassword);
+                
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                alert('تم تغيير كلمة المرور بنجاح');
+                changePasswordForm.reset();
+            }
+        });
+        
+        // حذف الحساب
+        deleteAccountForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) return;
+            
+            const password = document.getElementById('delete-password').value;
+            
+            // التحقق من كلمة المرور
+            const hashedPassword = btoa(password);
+            if (hashedPassword !== currentUser.password) {
+                alert('كلمة المرور غير صحيحة');
+                return;
+            }
+            
+            if (!confirm('هل أنت متأكد من رغبتك في حذف الحساب؟ هذه العملية لا يمكن التراجع عنها.')) {
+                return;
+            }
+            
+            // حذف الحساب
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const updatedUsers = users.filter(u => u.id !== currentUser.id);
+            
+            localStorage.setItem('users', JSON.stringify(updatedUsers));
+            localStorage.removeItem('currentUser');
+            
+            alert('تم حذف الحساب بنجاح');
+            logout();
+        });
+        
+        // تهيئة الصفحة عند التحميل
+        window.addEventListener('load', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                profileLink.classList.remove('hidden');
+                logoutLink.classList.remove('hidden');
+                registerLink.classList.add('hidden');
+                loginLink.classList.add('hidden');
+                showPage('profile');
+            } else {
+                showPage('home');
+            }
+        });
+    </script>
 </body>
 </html>
