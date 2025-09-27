@@ -3,965 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام إدارة الحسابات الآمن</title>
+    <title>حذف الحساب</title>
     <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #2980b9;
-            --success-color: #27ae60;
-            --danger-color: #e74c3c;
-            --warning-color: #f39c12;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        header {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 1.5rem;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .main-content {
-            padding: 2rem 0;
-            min-height: calc(100vh - 140px);
-        }
-        
-        .card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: var(--secondary-color);
-        }
-        
-        .btn-danger {
-            background-color: var(--danger-color);
-        }
-        
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
-        
-        .alert {
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
-        
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .captcha-container {
-            background-color: #f9f9f9;
-            padding: 1rem;
-            border-radius: 4px;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        footer {
-            background-color: var(--dark-color);
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-            margin-top: 2rem;
-        }
-        
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 1.5rem;
-        }
-        
-        .tab {
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-        }
-        
-        .tab.active {
-            border-bottom: 3px solid var(--primary-color);
-            font-weight: bold;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-            }
-            
-            .nav-links li {
-                margin: 0.5rem 0;
-            }
-        }
+        /* نفس تصميم CSS من الرد السابق */
+        body { font-family: 'Cairo', sans-serif; line-height: 1.8; color: #333; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { max-width: 500px; width: 100%; background-color: #fff; padding: 30px 40px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+        h1 { color: #d9534f; text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; text-align: left; direction: ltr; }
+        button { width: 100%; padding: 14px; border: none; border-radius: 8px; background-color: #0275d8; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s; }
+        button:disabled { background-color: #a0a0a0; cursor: not-allowed; }
+        .message { padding: 15px; margin-top: 20px; border-radius: 8px; text-align: center; display: none; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        #otp-section { display: none; }
+        #final-message-section { display: none; text-align: center; }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">نظام الحسابات الآمن</div>
-                <ul class="nav-links">
-                    <li><a href="#" id="home-link">الرئيسية</a></li>
-                    <li><a href="#" id="register-link">إنشاء حساب</a></li>
-                    <li><a href="#" id="login-link">تسجيل الدخول</a></li>
-                    <li><a href="#" id="profile-link" class="hidden">حسابي</a></li>
-                    <li><a href="#" id="logout-link" class="hidden">تسجيل الخروج</a></li>
-                </ul>
-            </nav>
+    <div class="container">
+        <h1>حذف الحساب نهائياً</h1>
+        <div id="message-box" class="message"></div>
+
+        <div id="phone-section">
+            <p>أدخل رقم هاتفك المسجل لدينا لبدء عملية الحذف.</p>
+            <div class="form-group">
+                <label for="phone">رقم الهاتف (بدون رمز الدولة )</label>
+                <input type="tel" id="phone" placeholder="7xxxxxxxx">
+            </div>
+            <button id="send-otp-btn" onclick="sendOTP()">إرسال رمز التحقق</button>
         </div>
-    </header>
 
-    <div class="main-content">
-        <div class="container">
-            <!-- الصفحة الرئيسية -->
-            <div id="home-page" class="card">
-                <h1>مرحباً بك في نظام إدارة الحسابات الآمن</h1>
-                <p>هذا النظام مصمم لتطبيق أفضل ممارسات الأمن السيبراني لحماية حسابات المستخدمين.</p>
-                <p>الميزات المتوفرة:</p>
-                <ul>
-                    <li>إنشاء حساب جديد مع التحقق من البريد الإلكتروني والهاتف</li>
-                    <li>تسجيل الدخول الآمن مع CAPTCHA وحماية من الهجمات</li>
-                    <li>إدارة الحساب الشخصي وتحديث المعلومات</li>
-                    <li>تغيير كلمة المرور وحذف الحساب</li>
-                </ul>
+        <div id="otp-section">
+            <p>لقد أرسلنا رمزًا إلى رقمك. يرجى إدخاله أدناه.</p>
+            <div class="form-group">
+                <label for="otp">رمز التحقق (OTP)</label>
+                <input type="text" id="otp" placeholder="xxxxxx">
             </div>
+            <button id="verify-otp-btn" onclick="scheduleDeletion()">تأكيد وحذف الحساب</button>
+        </div>
 
-            <!-- نموذج إنشاء حساب -->
-            <div id="register-page" class="card hidden">
-                <h2>إنشاء حساب جديد</h2>
-                <form id="register-form">
-                    <div class="form-group">
-                        <label for="username">اسم المستخدم:</label>
-                        <input type="text" id="username" name="username" required>
-                        <small id="username-error" class="alert-danger hidden"></small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">البريد الإلكتروني:</label>
-                        <input type="email" id="email" name="email" required>
-                        <small id="email-error" class="alert-danger hidden"></small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">رقم الهاتف:</label>
-                        <input type="tel" id="phone" name="phone" required>
-                        <small id="phone-error" class="alert-danger hidden"></small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password">كلمة المرور:</label>
-                        <input type="password" id="password" name="password" required>
-                        <small>يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، وتشمل حروف كبيرة وصغيرة وأرقاماً</small>
-                        <small id="password-error" class="alert-danger hidden"></small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="confirm-password">تأكيد كلمة المرور:</label>
-                        <input type="password" id="confirm-password" name="confirm-password" required>
-                        <small id="confirm-password-error" class="alert-danger hidden"></small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="profile-picture">الصورة الشخصية:</label>
-                        <input type="file" id="profile-picture" name="profile-picture" accept="image/*">
-                        <small>يجب أن تكون الصورة بحجم أقل من 2MB وبصيغة JPG أو PNG</small>
-                        <small id="picture-error" class="alert-danger hidden"></small>
-                    </div>
-                    
-                    <div class="captcha-container">
-                        <canvas id="captcha-canvas" width="200" height="60" style="border: 1px solid #ddd; background: #f9f9f9;"></canvas>
-                        <label for="captcha-input">أدخل النص أعلاه:</label>
-                        <input type="text" id="captcha-input" name="captcha" required autocomplete="off">
-                        <button type="button" id="refresh-captcha">تحديث CAPTCHA</button>
-                        <small id="captcha-error" class="alert-danger hidden"></small>
-                    </div>
-                    
-                    <button type="submit">إنشاء الحساب</button>
-                </form>
-            </div>
-
-            <!-- نموذج تسجيل الدخول -->
-            <div id="login-page" class="card hidden">
-                <h2>تسجيل الدخول</h2>
-                <form id="login-form">
-                    <div class="form-group">
-                        <label for="login-username">اسم المستخدم أو البريد الإلكتروني:</label>
-                        <input type="text" id="login-username" name="login-username" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="login-password">كلمة المرور:</label>
-                        <input type="password" id="login-password" name="login-password" required>
-                    </div>
-                    
-                    <div class="captcha-container">
-                        <canvas id="login-captcha-canvas" width="200" height="60" style="border: 1px solid #ddd; background: #f9f9f9;"></canvas>
-                        <label for="login-captcha-input">أدخل النص أعلاه:</label>
-                        <input type="text" id="login-captcha-input" name="login-captcha" required autocomplete="off">
-                        <button type="button" id="refresh-login-captcha">تحديث CAPTCHA</button>
-                        <small id="login-captcha-error" class="alert-danger hidden"></small>
-                    </div>
-                    
-                    <button type="submit">تسجيل الدخول</button>
-                </form>
-            </div>
-
-            <!-- صفحة الملف الشخصي -->
-            <div id="profile-page" class="card hidden">
-                <h2>إدارة الحساب</h2>
-                
-                <div class="tabs">
-                    <div class="tab active" data-tab="profile-info">المعلومات الشخصية</div>
-                    <div class="tab" data-tab="change-password">تغيير كلمة المرور</div>
-                    <div class="tab" data-tab="delete-account">حذف الحساب</div>
-                </div>
-                
-                <!-- معلومات الحساب -->
-                <div id="profile-info" class="tab-content active">
-                    <div style="text-align: center;">
-                        <img src="" alt="الصورة الشخصية" class="profile-img" id="profile-picture-display">
-                    </div>
-                    
-                    <form id="profile-form">
-                        <div class="form-group">
-                            <label for="profile-username">اسم المستخدم:</label>
-                            <input type="text" id="profile-username" name="profile-username" readonly>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="profile-email">البريد الإلكتروني:</label>
-                            <input type="email" id="profile-email" name="profile-email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="profile-phone">رقم الهاتف:</label>
-                            <input type="tel" id="profile-phone" name="profile-phone" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="new-profile-picture">تغيير الصورة الشخصية:</label>
-                            <input type="file" id="new-profile-picture" name="new-profile-picture" accept="image/*">
-                            <small>يجب أن تكون الصورة بحجم أقل من 2MB وبصيغة JPG أو PNG</small>
-                        </div>
-                        
-                        <button type="submit">حفظ التغييرات</button>
-                    </form>
-                </div>
-                
-                <!-- تغيير كلمة المرور -->
-                <div id="change-password" class="tab-content">
-                    <form id="change-password-form">
-                        <div class="form-group">
-                            <label for="current-password">كلمة المرور الحالية:</label>
-                            <input type="password" id="current-password" name="current-password" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="new-password">كلمة المرور الجديدة:</label>
-                            <input type="password" id="new-password" name="new-password" required>
-                            <small>يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، وتشمل حروف كبيرة وصغيرة وأرقاماً</small>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="confirm-new-password">تأكيد كلمة المرور الجديدة:</label>
-                            <input type="password" id="confirm-new-password" name="confirm-new-password" required>
-                        </div>
-                        
-                        <button type="submit">تغيير كلمة المرور</button>
-                    </form>
-                </div>
-                
-                <!-- حذف الحساب -->
-                <div id="delete-account" class="tab-content">
-                    <div class="alert alert-danger">
-                        <h3>تحذير: هذه العملية لا يمكن التراجع عنها</h3>
-                        <p>سيتم حذف حسابك وكل بياناتك بشكل نهائي.</p>
-                    </div>
-                    
-                    <form id="delete-account-form">
-                        <div class="form-group">
-                            <label for="delete-password">أدخل كلمة المرور للتأكيد:</label>
-                            <input type="password" id="delete-password" name="delete-password" required>
-                        </div>
-                        
-                        <button type="submit" class="btn-danger">حذف الحساب نهائياً</button>
-                    </form>
-                </div>
-            </div>
+        <div id="final-message-section">
+            <h2 class="success">تم استلام طلبك بنجاح</h2>
+            <p>لقد قمت بطلب حذف حسابك. سيتم الاحتفاظ ببياناتك لمدة 10 أيام، إذا لم تقم بتسجيل الدخول خلال هذه الفترة، سيتم حذف بياناتك بشكل نهائي.</p>
         </div>
     </div>
 
-    <footer>
-        <div class="container">
-            <p>نظام إدارة الحسابات الآمن &copy; 2023 - تطبيق ممارسات أمن الويب</p>
-        </div>
-    </footer>
+    <!-- استيراد Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
     <script>
-        // عناصر DOM
-        const homePage = document.getElementById('home-page');
-        const registerPage = document.getElementById('register-page');
-        const loginPage = document.getElementById('login-page');
-        const profilePage = document.getElementById('profile-page');
-        
-        const homeLink = document.getElementById('home-link');
-        const registerLink = document.getElementById('register-link');
-        const loginLink = document.getElementById('login-link');
-        const profileLink = document.getElementById('profile-link');
-        const logoutLink = document.getElementById('logout-link');
-        
-        const registerForm = document.getElementById('register-form');
-        const loginForm = document.getElementById('login-form');
-        const profileForm = document.getElementById('profile-form');
-        const changePasswordForm = document.getElementById('change-password-form');
-        const deleteAccountForm = document.getElementById('delete-account-form');
-        
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        
-        // متغيرات CAPTCHA
-        let currentRegisterCaptcha = '';
-        let currentLoginCaptcha = '';
+        // =================================================================
+        // === [هام جداً] - أدخل معلوماتك السرية هنا ===
+        // =================================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBkYLrmedVI9VZOCZ0xj6HvVSsGGm8OhHs",
+  authDomain: "coffee-spark-ai-barista-41d7a.firebaseapp.com",
+  projectId: "coffee-spark-ai-barista-41d7a",
+  storageBucket: "coffee-spark-ai-barista-41d7a.firebasestorage.app",
+  messagingSenderId: "515148094227",
+  appId: "1:515148094227:web:845baa681e936daa0b98e6"
+};
+        const TWILIO_ACCOUNT_SID = "AC634c17a36e1473bd33a1a4f012ba055e";
+        const TWILIO_AUTH_TOKEN = "c8afae23c5650a15ea36e7a05e6b3d45";
+        const TWILIO_VERIFY_SID = "VA4d95c0954a6a56a3a3b600f19d1bfa87";
+        // =================================================================
 
-        // توليد نص CAPTCHA عشوائي
-        function generateCaptchaText(length = 6) {
-            const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
+        // تهيئة Firebase
+        firebase.initializeApp(firebaseConfig );
+        const db = firebase.firestore();
+
+        // عناصر الواجهة
+        const phoneInput = document.getElementById('phone');
+        const otpInput = document.getElementById('otp');
+        const sendOtpBtn = document.getElementById('send-otp-btn');
+        const verifyOtpBtn = document.getElementById('verify-otp-btn');
+        const messageBox = document.getElementById('message-box');
+        const phoneSection = document.getElementById('phone-section');
+        const otpSection = document.getElementById('otp-section');
+        const finalMessageSection = document.getElementById('final-message-section');
+
+        function showMessage(text, type) {
+            messageBox.textContent = text;
+            messageBox.className = `message ${type}`;
+            messageBox.style.display = 'block';
         }
 
-        // رسم CAPTCHA على Canvas
-        function drawCaptcha(canvasId, captchaText) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext('2d');
-            
-            // تنظيف Canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // خلفية فاتحة
-            ctx.fillStyle = '#f0f0f0';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // إضافة خطوط تشويش (ضوضاء)
-            ctx.strokeStyle = '#ccc';
-            for (let i = 0; i < 5; i++) {
-                ctx.beginPath();
-                ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
-                ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
-                ctx.stroke();
-            }
-            
-            // إضافة نقاط تشويش
-            ctx.fillStyle = '#ddd';
-            for (let i = 0; i < 30; i++) {
-                ctx.beginPath();
-                ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 1, 0, 2 * Math.PI);
-                ctx.fill();
-            }
-            
-            // رسم النص مع تدوير عشوائي لكل حرف
-            ctx.font = '30px Arial';
-            ctx.textBaseline = 'middle';
-            
-            const charWidth = canvas.width / captchaText.length;
-            for (let i = 0; i < captchaText.length; i++) {
-                const char = captchaText[i];
-                const x = i * charWidth + charWidth / 2;
-                const y = canvas.height / 2;
-                
-                // تدوير عشوائي
-                const angle = (Math.random() - 0.5) * 0.5; // ±15 درجة
-                ctx.save();
-                ctx.translate(x, y);
-                ctx.rotate(angle);
-                ctx.fillStyle = `rgb(${Math.floor(Math.random() * 100 + 100)}, ${Math.floor(Math.random() * 100 + 100)}, ${Math.floor(Math.random() * 100 + 100)})`;
-                ctx.fillText(char, 0, 0);
-                ctx.restore();
-            }
+        function setLoading(button, isLoading) {
+            button.disabled = isLoading;
+            button.textContent = isLoading ? 'جاري المعالجة...' : button.dataset.originalText;
         }
 
-        // تهيئة CAPTCHA
-        function initCaptcha() {
-            currentRegisterCaptcha = generateCaptchaText();
-            drawCaptcha('captcha-canvas', currentRegisterCaptcha);
-            
-            currentLoginCaptcha = generateCaptchaText();
-            drawCaptcha('login-captcha-canvas', currentLoginCaptcha);
-        }
-
-        // تحديث CAPTCHA للتسجيل
-        document.getElementById('refresh-captcha').addEventListener('click', function() {
-            currentRegisterCaptcha = generateCaptchaText();
-            drawCaptcha('captcha-canvas', currentRegisterCaptcha);
-            document.getElementById('captcha-input').value = '';
-            document.getElementById('captcha-error').classList.add('hidden');
-        });
-
-        // تحديث CAPTCHA لتسجيل الدخول
-        document.getElementById('refresh-login-captcha').addEventListener('click', function() {
-            currentLoginCaptcha = generateCaptchaText();
-            drawCaptcha('login-captcha-canvas', currentLoginCaptcha);
-            document.getElementById('login-captcha-input').value = '';
-            document.getElementById('login-captcha-error').classList.add('hidden');
-        });
-
-        // تهيئة رمز الجلسة
-        function initSession() {
-            const token = Date.now().toString(36) + Math.random().toString(36).substring(2, 10);
-            sessionStorage.setItem('sessionToken', token);
-        }
-
-        // التنقل بين الصفحات مع حماية الدخول
-        function showPage(page) {
-            homePage.classList.add('hidden');
-            registerPage.classList.add('hidden');
-            loginPage.classList.add('hidden');
-            profilePage.classList.add('hidden');
-            
-            const hasSession = sessionStorage.getItem('sessionToken');
-            
-            // حماية صفحات التسجيل وتسجيل الدخول
-            if ((page === 'register' || page === 'login') && !hasSession) {
-                alert('الوصول غير مصرح به. يرجى البدء من الصفحة الرئيسية.');
-                showPage('home');
+        async function sendOTP() {
+            const phone = phoneInput.value.trim();
+            if (!/^(71|78|73|70|77)[0-9]{7}$/.test(phone)) {
+                showMessage('الرجاء إدخال رقم هاتف يمني صحيح.', 'error');
                 return;
             }
-            
-            if (page === 'home') {
-                homePage.classList.remove('hidden');
-                initSession(); // تهيئة رمز الجلسة
-            } else if (page === 'register') {
-                registerPage.classList.remove('hidden');
-            } else if (page === 'login') {
-                loginPage.classList.remove('hidden');
-            } else if (page === 'profile') {
-                profilePage.classList.remove('hidden');
-                loadUserProfile();
-            }
-        }
 
-        // روابط التنقل
-        homeLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            showPage('home');
-        });
-        
-        registerLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            showPage('register');
-        });
-        
-        loginLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            showPage('login');
-        });
-        
-        profileLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            showPage('profile');
-        });
-        
-        logoutLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            logout();
-        });
+            sendOtpBtn.dataset.originalText = sendOtpBtn.textContent;
+            setLoading(sendOtpBtn, true);
+            messageBox.style.display = 'none';
 
-        // تسجيل الخروج
-        function logout() {
-            localStorage.removeItem('currentUser');
-            profileLink.classList.add('hidden');
-            logoutLink.classList.add('hidden');
-            registerLink.classList.remove('hidden');
-            loginLink.classList.remove('hidden');
-            showPage('home');
-        }
-
-        // إدارة التبويبات
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                const tabId = this.getAttribute('data-tab');
-                tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-
-        // دوال التحقق
-        function validatePassword(password) {
-            const minLength = 8;
-            const hasUpperCase = /[A-Z]/.test(password);
-            const hasLowerCase = /[a-z]/.test(password);
-            const hasNumbers = /\d/.test(password);
-            return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers;
-        }
-        
-        function validateEmail(email) {
-            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        }
-        
-        function validatePhone(phone) {
-            const re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-            return re.test(String(phone));
-        }
-        
-        function validateImage(file) {
-            if (!file) return true;
-            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-            const maxSize = 2 * 1024 * 1024;
-            if (!allowedTypes.includes(file.type)) {
-                return 'نوع الملف غير مسموح به. يرجى استخدام صيغة JPG أو PNG.';
-            }
-            if (file.size > maxSize) {
-                return 'حجم الملف كبير جداً. الحد الأقصى هو 2MB.';
-            }
-            return null;
-        }
-
-        // معالجة إنشاء الحساب
-        registerForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            const profilePicture = document.getElementById('profile-picture').files[0];
-            const captchaInput = document.getElementById('captcha-input').value.trim();
-            
-            document.querySelectorAll('.alert-danger').forEach(el => {
-                el.classList.add('hidden');
-            });
-            
-            let isValid = true;
-            
-            // التحقق من CAPTCHA
-            if (captchaInput !== currentRegisterCaptcha) {
-                document.getElementById('captcha-error').textContent = 'رمز التحقق غير صحيح';
-                document.getElementById('captcha-error').classList.remove('hidden');
-                currentRegisterCaptcha = generateCaptchaText();
-                drawCaptcha('captcha-canvas', currentRegisterCaptcha);
-                document.getElementById('captcha-input').value = '';
-                isValid = false;
-            }
-            
-            if (username.length < 3) {
-                document.getElementById('username-error').textContent = 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل';
-                document.getElementById('username-error').classList.remove('hidden');
-                isValid = false;
-            }
-            
-            if (!validateEmail(email)) {
-                document.getElementById('email-error').textContent = 'البريد الإلكتروني غير صحيح';
-                document.getElementById('email-error').classList.remove('hidden');
-                isValid = false;
-            }
-            
-            if (!validatePhone(phone)) {
-                document.getElementById('phone-error').textContent = 'رقم الهاتف غير صحيح';
-                document.getElementById('phone-error').classList.remove('hidden');
-                isValid = false;
-            }
-            
-            if (!validatePassword(password)) {
-                document.getElementById('password-error').textContent = 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل، وتشمل حروف كبيرة وصغيرة وأرقاماً';
-                document.getElementById('password-error').classList.remove('hidden');
-                isValid = false;
-            }
-            
-            if (password !== confirmPassword) {
-                document.getElementById('confirm-password-error').textContent = 'كلمتا المرور غير متطابقتين';
-                document.getElementById('confirm-password-error').classList.remove('hidden');
-                isValid = false;
-            }
-            
-            const imageError = validateImage(profilePicture);
-            if (imageError) {
-                document.getElementById('picture-error').textContent = imageError;
-                document.getElementById('picture-error').classList.remove('hidden');
-                isValid = false;
-            }
-            
-            if (!isValid) return;
-            
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const existingUser = users.find(u => u.username === username || u.email === email);
-            
-            if (existingUser) {
-                if (existingUser.username === username) {
-                    document.getElementById('username-error').textContent = 'اسم المستخدم موجود مسبقاً';
-                    document.getElementById('username-error').classList.remove('hidden');
-                } else {
-                    document.getElementById('email-error').textContent = 'البريد الإلكتروني موجود مسبقاً';
-                    document.getElementById('email-error').classList.remove('hidden');
+            try {
+                // التحقق من وجود المستخدم في Firestore أولاً
+                const userQuery = await db.collection("users").where("phone", "==", phone).limit(1).get();
+                if (userQuery.empty) {
+                    throw new Error("الحساب غير موجود.");
                 }
-                return;
-            }
-            
-            const hashedPassword = btoa(password);
-            let pictureData = null;
-            
-            if (profilePicture) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    pictureData = e.target.result;
-                    const newUser = {
-                        id: Date.now(),
-                        username,
-                        email,
-                        phone,
-                        password: hashedPassword,
-                        profilePicture: pictureData,
-                        isActive: false,
-                        otp: Math.floor(100000 + Math.random() * 900000).toString(),
-                        failedLoginAttempts: 0,
-                        lockUntil: null
-                    };
-                    users.push(newUser);
-                    localStorage.setItem('users', JSON.stringify(users));
-                    alert(`تم إرسال رمز التفعيل إلى بريدك الإلكتروني: ${newUser.otp}`);
-                    showPage('login');
-                };
-                reader.readAsDataURL(profilePicture);
-            } else {
-                const newUser = {
-                    id: Date.now(),
-                    username,
-                    email,
-                    phone,
-                    password: hashedPassword,
-                    profilePicture: null,
-                    isActive: false,
-                    otp: Math.floor(100000 + Math.random() * 900000).toString(),
-                    failedLoginAttempts: 0,
-                    lockUntil: null
-                };
-                users.push(newUser);
-                localStorage.setItem('users', JSON.stringify(users));
-                alert(`تم إرسال رمز التفعيل إلى بريدك الإلكتروني: ${newUser.otp}`);
-                showPage('login');
-            }
-        });
 
-        // معالجة تسجيل الدخول
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const loginIdentifier = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            const captchaInput = document.getElementById('login-captcha-input').value.trim();
-            
-            document.getElementById('login-captcha-error').classList.add('hidden');
-            
-            if (captchaInput !== currentLoginCaptcha) {
-                document.getElementById('login-captcha-error').textContent = 'رمز التحقق غير صحيح';
-                document.getElementById('login-captcha-error').classList.remove('hidden');
-                currentLoginCaptcha = generateCaptchaText();
-                drawCaptcha('login-captcha-canvas', currentLoginCaptcha);
-                document.getElementById('login-captcha-input').value = '';
-                return;
-            }
-            
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const user = users.find(u => u.username === loginIdentifier || u.email === loginIdentifier);
-            
-            if (!user) {
-                alert('اسم المستخدم أو البريد الإلكتروني غير صحيح');
-                return;
-            }
-            
-            if (!user.isActive) {
-                const otp = prompt('الحساب غير مفعل. أدخل رمز التفعيل الذي تم إرساله إليك:');
-                if (otp === user.otp) {
-                    user.isActive = true;
-                    localStorage.setItem('users', JSON.stringify(users));
-                    alert('تم تفعيل الحساب بنجاح! يمكنك الآن تسجيل الدخول.');
-                } else {
-                    alert('رمز التفعيل غير صحيح');
-                    return;
-                }
-            }
-            
-            if (user.lockUntil && Date.now() < user.lockUntil) {
-                const remainingTime = Math.ceil((user.lockUntil - Date.now()) / 60000);
-                alert(`الحساب مؤقتاً معطل. يرجى المحاولة بعد ${remainingTime} دقيقة.`);
-                return;
-            }
-            
-            const hashedPassword = btoa(password);
-            if (user.password !== hashedPassword) {
-                user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 1;
-                if (user.failedLoginAttempts >= 5) {
-                    user.lockUntil = Date.now() + (15 * 60 * 1000);
-                    alert('تم تجاوز عدد المحاولات المسموح بها. الحساب معطل مؤقتاً لمدة 15 دقيقة.');
-                } else {
-                    alert(`كلمة المرور غير صحيحة. لديك ${5 - user.failedLoginAttempts} محاولات متبقية.`);
-                }
-                localStorage.setItem('users', JSON.stringify(users));
-                return;
-            }
-            
-            user.failedLoginAttempts = 0;
-            user.lockUntil = null;
-            localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            
-            profileLink.classList.remove('hidden');
-            logoutLink.classList.remove('hidden');
-            registerLink.classList.add('hidden');
-            loginLink.classList.add('hidden');
-            showPage('profile');
-        });
+                // إرسال طلب إلى Twilio مباشرة
+                const url = `https://verify.twilio.com/v2/Services/${TWILIO_VERIFY_SID}/Verifications`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Basic ' + btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}` ),
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        'To': `+967${phone}`,
+                        'Channel': 'sms'
+                    })
+                });
 
-        // تحميل بيانات الملف الشخصي
-        function loadUserProfile() {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (!currentUser) {
-                showPage('home');
-                return;
-            }
-            document.getElementById('profile-username').value = currentUser.username;
-            document.getElementById('profile-email').value = currentUser.email;
-            document.getElementById('profile-phone').value = currentUser.phone;
-            if (currentUser.profilePicture) {
-                document.getElementById('profile-picture-display').src = currentUser.profilePicture;
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'فشل إرسال الرمز.');
+                }
+
+                showMessage('تم إرسال رمز التحقق بنجاح.', 'success');
+                phoneSection.style.display = 'none';
+                otpSection.style.display = 'block';
+
+            } catch (error) {
+                showMessage(error.message, 'error');
+            } finally {
+                setLoading(sendOtpBtn, false);
             }
         }
 
-        // تحديث الملف الشخصي
-        profileForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (!currentUser) return;
-            const email = document.getElementById('profile-email').value;
-            const phone = document.getElementById('profile-phone').value;
-            const newProfilePicture = document.getElementById('new-profile-picture').files[0];
-            if (!validateEmail(email)) {
-                alert('البريد الإلكتروني غير صحيح');
+        async function scheduleDeletion() {
+            const phone = phoneInput.value.trim();
+            const code = otpInput.value.trim();
+
+            if (code.length < 4) {
+                showMessage('الرجاء إدخال رمز تحقق صحيح.', 'error');
                 return;
             }
-            if (!validatePhone(phone)) {
-                alert('رقم الهاتف غير صحيح');
-                return;
-            }
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const userIndex = users.findIndex(u => u.id === currentUser.id);
-            if (userIndex !== -1) {
-                users[userIndex].email = email;
-                users[userIndex].phone = phone;
-                if (newProfilePicture) {
-                    const imageError = validateImage(newProfilePicture);
-                    if (imageError) {
-                        alert(imageError);
-                        return;
-                    }
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        users[userIndex].profilePicture = e.target.result;
-                        currentUser.profilePicture = e.target.result;
-                        localStorage.setItem('users', JSON.stringify(users));
-                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                        document.getElementById('profile-picture-display').src = e.target.result;
-                        alert('تم تحديث البيانات بنجاح');
-                    };
-                    reader.readAsDataURL(newProfilePicture);
-                } else {
-                    localStorage.setItem('users', JSON.stringify(users));
-                    currentUser.email = email;
-                    currentUser.phone = phone;
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                    alert('تم تحديث البيانات بنجاح');
+
+            verifyOtpBtn.dataset.originalText = verifyOtpBtn.textContent;
+            setLoading(verifyOtpBtn, true);
+            messageBox.style.display = 'none';
+
+            try {
+                // التحقق من الرمز عبر Twilio
+                const url = `https://verify.twilio.com/v2/Services/${TWILIO_VERIFY_SID}/VerificationCheck`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Basic ' + btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}` ),
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        'To': `+967${phone}`,
+                        'Code': code
+                    })
+                });
+
+                const data = await response.json();
+                if (data.status !== 'approved') {
+                    throw new Error('رمز التحقق غير صحيح.');
                 }
-            }
-        });
 
-        // تغيير كلمة المرور
-        changePasswordForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (!currentUser) return;
-            const currentPassword = document.getElementById('current-password').value;
-            const newPassword = document.getElementById('new-password').value;
-            const confirmNewPassword = document.getElementById('confirm-new-password').value;
-            const hashedCurrentPassword = btoa(currentPassword);
-            if (hashedCurrentPassword !== currentUser.password) {
-                alert('كلمة المرور الحالية غير صحيحة');
-                return;
-            }
-            if (!validatePassword(newPassword)) {
-                alert('كلمة المرور الجديدة يجب أن تحتوي على 8 أحرف على الأقل، وتشمل حروف كبيرة وصغيرة وأرقاماً');
-                return;
-            }
-            if (newPassword !== confirmNewPassword) {
-                alert('كلمتا المرور غير متطابقتين');
-                return;
-            }
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const userIndex = users.findIndex(u => u.id === currentUser.id);
-            if (userIndex !== -1) {
-                users[userIndex].password = btoa(newPassword);
-                currentUser.password = btoa(newPassword);
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                alert('تم تغيير كلمة المرور بنجاح');
-                changePasswordForm.reset();
-            }
-        });
+                // إذا كان الرمز صحيحًا، قم بتحديث Firestore
+                const userQuery = await db.collection("users").where("phone", "==", phone).limit(1).get();
+                if (userQuery.empty) {
+                    throw new Error("حدث خطأ: الحساب غير موجود.");
+                }
 
-        // حذف الحساب
-        deleteAccountForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (!currentUser) return;
-            const password = document.getElementById('delete-password').value;
-            const hashedPassword = btoa(password);
-            if (hashedPassword !== currentUser.password) {
-                alert('كلمة المرور غير صحيحة');
-                return;
-            }
-            if (!confirm('هل أنت متأكد من رغبتك في حذف الحساب؟ هذه العملية لا يمكن التراجع عنها.')) {
-                return;
-            }
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const updatedUsers = users.filter(u => u.id !== currentUser.id);
-            localStorage.setItem('users', JSON.stringify(updatedUsers));
-            localStorage.removeItem('currentUser');
-            alert('تم حذف الحساب بنجاح');
-            logout();
-        });
+                const userDoc = userQuery.docs[0];
+                await userDoc.ref.update({
+                    status: "pendingDeletion",
+                    deletionScheduledAt: new Date() // استخدام تاريخ المتصفح
+                });
 
-        // تهيئة عند التحميل
-        window.addEventListener('load', function() {
-            initCaptcha();
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) {
-                profileLink.classList.remove('hidden');
-                logoutLink.classList.remove('hidden');
-                registerLink.classList.add('hidden');
-                loginLink.classList.add('hidden');
-                showPage('profile');
-            } else {
-                showPage('home');
+                // إظهار رسالة النجاح النهائية
+                otpSection.style.display = 'none';
+                document.querySelector('h1').style.display = 'none';
+                finalMessageSection.style.display = 'block';
+
+            } catch (error) {
+                showMessage(error.message, 'error');
+            } finally {
+                setLoading(verifyOtpBtn, false);
             }
-        });
+        }
     </script>
 </body>
 </html>
