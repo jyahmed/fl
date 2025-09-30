@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حذف الحساب</title>
     <style>
-        /* نفس تصميم CSS من الرد السابق */
+        /* نفس تصميم CSS لم يتغير */
         body { font-family: 'Cairo', sans-serif; line-height: 1.8; color: #333; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .container { max-width: 500px; width: 100%; background-color: #fff; padding: 30px 40px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
         h1 { color: #d9534f; text-align: center; }
@@ -40,9 +40,9 @@
             <p>لقد أرسلنا رمزًا إلى رقمك. يرجى إدخاله أدناه.</p>
             <div class="form-group">
                 <label for="otp">رمز التحقق (OTP)</label>
-                <input type="text" id="otp" placeholder="xxxxxx">
+                <input type="text" id="otp" placeholder="xxxxxx" inputmode="numeric" autocomplete="one-time-code">
             </div>
-            <button id="verify-otp-btn" onclick="scheduleDeletion()">تأكيد وحذف الحساب</button>
+            <button id="verify-otp-btn" onclick="verifyAndDelete()">تأكيد وحذف الحساب</button>
         </div>
 
         <div id="final-message-section">
@@ -51,33 +51,17 @@
         </div>
     </div>
 
-    <!-- استيراد Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
     <script>
         // =================================================================
-        // === [هام جداً] - أدخل معلوماتك السرية هنا ===
+        // ===              روابط دوال الخادم الآمنة                  ===
         // =================================================================
-const firebaseConfig = {
-  apiKey: "AIzaSyBkYLrmedVI9VZOCZ0xj6HvVSsGGm8OhHs",
-  authDomain: "coffee-spark-ai-barista-41d7a.firebaseapp.com",
-  projectId: "coffee-spark-ai-barista-41d7a",
-  storageBucket: "coffee-spark-ai-barista-41d7a.firebasestorage.app",
-  messagingSenderId: "515148094227",
-  appId: "1:515148094227:web:845baa681e936daa0b98e6"
-}
-        const TWILIO_ACCOUNT_SID = "AC3d5fc57054e85ebea2512a1604384c9b";
-        const TWILIO_AUTH_TOKEN = "f3b2301402f1a0a1f7bceb8ba4ecc581";
-        const TWILIO_VERIFY_SID = "VAf0e4ebb6abb0db7e9b5473d93c4312d6";
+        // استبدل هذه الروابط إذا تغيرت في المستقبل
+        const START_VERIFICATION_URL = "https://startaccountdeletionverification-hzaw42xaq-zf.a.run.app";
+        const SCHEDULE_DELETION_URL = "https://scheduleaccountdeletion-hzaw42xiaq-zf.a.run.app"; // تم التحديث إلى الدالة الصحيحة
         // =================================================================
-
-        // تهيئة Firebase
-        firebase.initializeApp(firebaseConfig );
-        const db = firebase.firestore();
 
         // عناصر الواجهة
-        const phoneInput = document.getElementById('phone');
+        const phoneInput = document.getElementById('phone' );
         const otpInput = document.getElementById('otp');
         const sendOtpBtn = document.getElementById('send-otp-btn');
         const verifyOtpBtn = document.getElementById('verify-otp-btn');
@@ -92,9 +76,9 @@ const firebaseConfig = {
             messageBox.style.display = 'block';
         }
 
-        function setLoading(button, isLoading) {
+        function setLoading(button, isLoading, originalText) {
             button.disabled = isLoading;
-            button.textContent = isLoading ? 'جاري المعالجة...' : button.dataset.originalText;
+            button.textContent = isLoading ? 'جاري المعالجة...' : originalText;
         }
 
         async function sendOTP() {
@@ -104,48 +88,38 @@ const firebaseConfig = {
                 return;
             }
 
-            sendOtpBtn.dataset.originalText = sendOtpBtn.textContent;
-            setLoading(sendOtpBtn, true);
+            const originalBtnText = sendOtpBtn.textContent;
+            setLoading(sendOtpBtn, true, originalBtnText);
             messageBox.style.display = 'none';
 
             try {
-                // التحقق من وجود المستخدم في Firestore أولاً
-                const userQuery = await db.collection("users").where("phone", "==", phone).limit(1).get();
-                if (userQuery.empty) {
-                    throw new Error("الحساب غير موجود.");
-                }
-
-                // إرسال طلب إلى Twilio مباشرة
-                const url = `https://verify.twilio.com/v2/Services/${TWILIO_VERIFY_SID}/Verifications`;
-                const response = await fetch(url, {
+                // استدعاء دالة الخادم الآمنة لإرسال الرمز
+                const response = await fetch(START_VERIFICATION_URL, {
                     method: 'POST',
-                    headers: {
-                        'Authorization': 'Basic ' + btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}` ),
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams({
-                        'To': `+967${phone}`,
-                        'Channel': 'sms'
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone: phone })
                 });
 
+                const data = await response.json();
+
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'فشل إرسال الرمز.');
+                    // إذا لم تكن الاستجابة ناجحة، استخدم رسالة الخطأ من الخادم
+                    throw new Error(data.error || 'حدث خطأ غير متوقع.');
                 }
 
                 showMessage('تم إرسال رمز التحقق بنجاح.', 'success');
                 phoneSection.style.display = 'none';
                 otpSection.style.display = 'block';
+                otpInput.focus(); // تحسين: التركيز على حقل الرمز
 
             } catch (error) {
                 showMessage(error.message, 'error');
             } finally {
-                setLoading(sendOtpBtn, false);
+                setLoading(sendOtpBtn, false, originalBtnText);
             }
         }
 
-        async function scheduleDeletion() {
+        async function verifyAndDelete() {
             const phone = phoneInput.value.trim();
             const code = otpInput.value.trim();
 
@@ -154,51 +128,34 @@ const firebaseConfig = {
                 return;
             }
 
-            verifyOtpBtn.dataset.originalText = verifyOtpBtn.textContent;
-            setLoading(verifyOtpBtn, true);
+            const originalBtnText = verifyOtpBtn.textContent;
+            setLoading(verifyOtpBtn, true, originalBtnText);
             messageBox.style.display = 'none';
 
             try {
-                // التحقق من الرمز عبر Twilio
-                const url = `https://verify.twilio.com/v2/Services/${TWILIO_VERIFY_SID}/VerificationCheck`;
-                const response = await fetch(url, {
+                // استدعاء دالة الخادم الآمنة للتحقق وجدولة الحذف
+                const response = await fetch(SCHEDULE_DELETION_URL, {
                     method: 'POST',
-                    headers: {
-                        'Authorization': 'Basic ' + btoa(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}` ),
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams({
-                        'To': `+967${phone}`,
-                        'Code': code
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone: phone, code: code })
                 });
 
                 const data = await response.json();
-                if (data.status !== 'approved') {
-                    throw new Error('رمز التحقق غير صحيح.');
-                }
 
-                // إذا كان الرمز صحيحًا، قم بتحديث Firestore
-                const userQuery = await db.collection("users").where("phone", "==", phone).limit(1).get();
-                if (userQuery.empty) {
-                    throw new Error("حدث خطأ: الحساب غير موجود.");
+                if (!response.ok) {
+                    throw new Error(data.error || 'حدث خطأ أثناء التحقق.');
                 }
-
-                const userDoc = userQuery.docs[0];
-                await userDoc.ref.update({
-                    status: "pendingDeletion",
-                    deletionScheduledAt: new Date() // استخدام تاريخ المتصفح
-                });
 
                 // إظهار رسالة النجاح النهائية
                 otpSection.style.display = 'none';
                 document.querySelector('h1').style.display = 'none';
+                messageBox.style.display = 'none';
                 finalMessageSection.style.display = 'block';
 
             } catch (error) {
                 showMessage(error.message, 'error');
             } finally {
-                setLoading(verifyOtpBtn, false);
+                setLoading(verifyOtpBtn, false, originalBtnText);
             }
         }
     </script>
