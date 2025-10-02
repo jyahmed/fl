@@ -1,239 +1,201 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>مثال Firebase MFA - ويب (SMS)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>حذف الحساب عبر Hypersender — صفحة واحدة</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 720px; margin: 24px auto; padding: 12px; direction: rtl; }
-    input, button { padding: 8px; margin: 6px 0; width: 100%; box-sizing: border-box; }
-    .card { border:1px solid #ddd; padding:12px; border-radius:8px; margin-bottom:14px; background:#fafafa; }
-    small { color:#666; }
+    body { font-family: 'Cairo', sans-serif; line-height:1.8; color:#333; background:#f4f7f6; margin:0; padding:20px;
+           display:flex; justify-content:center; align-items:center; min-height:100vh; }
+    .container { max-width:500px; width:100%; background:#fff; padding:30px 40px; border-radius:12px;
+                 box-shadow:0 6px 20px rgba(0,0,0,.08); }
+    h1 { color:#d9534f; text-align:center; margin:0 0 12px 0; }
+    .form-group { margin-bottom:18px; }
+    label { display:block; margin-bottom:8px; font-weight:bold; }
+    input { width:100%; padding:12px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; direction:ltr; text-align:left; }
+    button { width:100%; padding:14px; border:none; border-radius:8px; background:#0275d8; color:#fff; font-size:16px; font-weight:700; cursor:pointer; }
+    button:disabled { background:#a0a0a0; cursor:not-allowed; }
+    .message { padding:14px; margin-top:18px; border-radius:8px; text-align:center; display:none; }
+    .success { background:#d4edda; color:#155724; }
+    .error { background:#f8d7da; color:#721c24; }
+    #otp-section { display:none; }
+    #final-message-section { display:none; text-align:center; }
+    .note { font-size:13px; color:#666; margin-top:10px; text-align:center; }
+    .small { font-size:12px; color:#666; margin-top:6px; }
   </style>
 </head>
 <body>
-  <h2>مثال Firebase MFA (ويب) — SMS</h2>
+  <div class="container" role="main">
+    <h1>حذف الحساب نهائياً</h1>
 
-  <div class="card">
-    <h3>تهيئة Firebase</h3>
-    <small>ضع إعدادات firebaseConfig في الكود أدناه من مشروعك في Firebase Console.</small>
-  </div>
+    <div id="message-box" class="message"></div>
 
-  <div class="card">
-    <h3>إنشاء حساب (Email / Password)</h3>
-    <input id="signupEmail" placeholder="البريد الإلكتروني" />
-    <input id="signupPass" placeholder="كلمة المرور" type="password" />
-    <button id="btnSignup">إنشاء حساب</button>
-  </div>
+    <div id="phone-section">
+      <p>أدخل رقم هاتفك مع رمز الدولة لاستخدام Hypersender في إرسال رمز OTP.</p>
+      <div class="form-group">
+        <label for="phone">رقم الهاتف (مثال: +9677XXXXXXXX)</label>
+        <input id="phone" type="tel" placeholder="+9677XXXXXXXX" />
+      </div>
+      <button id="send-otp-btn" onclick="sendOTP()">إرسال رمز التحقق</button>
+      <div class="note small">ملاحظة: من الأفضل أن تكون طلبات Hypersender من الخادم (proxy) لحماية مفتاح الـ API.</div>
+    </div>
 
-  <div class="card">
-    <h3>تسجيل دخول (Email / Password)</h3>
-    <input id="loginEmail" placeholder="البريد الإلكتروني" />
-    <input id="loginPass" placeholder="كلمة المرور" type="password" />
-    <button id="btnLogin">تسجيل الدخول</button>
-    <div id="mfaPrompt" style="display:none;">
-      <p>رمز أُرسل إلى هاتفك. أدخل الكود هنا:</p>
-      <input id="mfaCode" placeholder="أدخل رمز الـ SMS" />
-      <button id="btnFinishSignin">إكمال تسجيل الدخول</button>
+    <div id="otp-section">
+      <p>أدخل رمز الـ OTP المستلم:</p>
+      <div class="form-group">
+        <label for="otp">رمز التحقق</label>
+        <input id="otp" type="text" placeholder="xxxxxx" inputmode="numeric" autocomplete="one-time-code" />
+      </div>
+      <button id="verify-otp-btn" onclick="verifyAndDelete()">تأكيد وحذف الحساب</button>
+    </div>
+
+    <div id="final-message-section">
+      <h2 class="success">تم جدولة حذف الحساب</h2>
+      <p>تم التحقق بنجاح. سيتم حذف بياناتك نهائيًا بعد الفترة المحددة إذا لم تقم بتسجيل الدخول.</p>
     </div>
   </div>
 
-  <div class="card">
-    <h3>تسجيل عامل ثانٍ (إضافة رقم هاتف للمستخدم الحالي)</h3>
-    <input id="enrollPhone" placeholder="+900000000000" />
-    <div id="recaptcha-enroll"></div>
-    <button id="btnSendEnroll">إرسال رمز للتسجيل</button>
-    <input id="enrollCode" placeholder="ادخل كود التسجيل" />
-    <button id="btnCompleteEnroll">إكمال إضافة الهاتف</button>
-  </div>
+  <script>
+    // -----------------------------
+    // أدخل هنا معرّف الانستانس الذي زودتني به
+    // -----------------------------
+    const INSTANCE_ID = "a0039162-ee15-49c9-a7d0-fc7d1686cf0d";
+    // -----------------------------
+    // ملاحظة: اترك API_KEY فارغ أو ضع مفتاح للاختبار المحلي فقط.
+    // الأفضل أن لا تضع مفتاحًا في الكود على بيئة الإنتاج.
+    const API_KEY = "668|2tCCuCfVjNYjvFVDlTRnaFdnHZFVte8dh2TtBn3J0bce26bf"; // <-- ضع مفتاحك هنا فقط للاختبار المحلي إن أردت
 
-  <div class="card">
-    <h3>الحالة</h3>
-    <pre id="status">غير متصل</pre>
-  </div>
+    // افتراض مسارات send/verify — عدّل إذا كان في حسابك مسار مختلف.
+    const SEND_OTP_URL = `https://app.hypersender.com/instances/${INSTANCE_ID}/send-otp`;
+    const VERIFY_OTP_URL = `https://app.hypersender.com/instances/${INSTANCE_ID}/verify-otp`;
 
-  <!-- إضافة مكتبات Firebase (modular SDK) -->
-  <script type="module">
-    // ======= ضع هنا إعدادات مشروعك من Firebase Console =======
-const firebaseConfig = {
-  apiKey: "AIzaSyBkYLrmedVI9VZOCZ0xj6HvVSsGGm8OhHs",
-  authDomain: "coffee-spark-ai-barista-41d7a.firebaseapp.com",
-  projectId: "coffee-spark-ai-barista-41d7a",
-  storageBucket: "coffee-spark-ai-barista-41d7a.firebasestorage.app",
-  messagingSenderId: "515148094227",
-  appId: "1:515148094227:web:845baa681e936daa0b98e6"
-};
-    // =======================================================
+    // بديل آمن: ضع هنا مسار proxy على خادمك (موصى به)
+    // مثال: const PROXY_SEND = '/api/hypersender/send-otp';
+    //         const PROXY_VERIFY = '/api/hypersender/verify-otp';
+    const PROXY_SEND = null;   // اذا أردت استخدام proxy ضع هنا المسار كـ string
+    const PROXY_VERIFY = null; // مثال: '/api/verify-otp'
 
-    // استيراد المكتبات (modular)
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      RecaptchaVerifier,
-      signOut,
-      PhoneAuthProvider,
-      multiFactor,
-      PhoneMultiFactorGenerator,
-      getMultiFactorResolver
-    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    // عناصر DOM
+    const phoneInput = document.getElementById('phone');
+    const otpInput = document.getElementById('otp');
+    const sendOtpBtn = document.getElementById('send-otp-btn');
+    const verifyOtpBtn = document.getElementById('verify-otp-btn');
+    const messageBox = document.getElementById('message-box');
+    const phoneSection = document.getElementById('phone-section');
+    const otpSection = document.getElementById('otp-section');
+    const finalMessageSection = document.getElementById('final-message-section');
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // عناصر الواجهة
-    const statusEl = document.getElementById('status');
-    const updateStatus = (txt) => statusEl.textContent = txt;
-
-    // ======== Signup =========
-    document.getElementById('btnSignup').addEventListener('click', async () => {
-      const email = document.getElementById('signupEmail').value;
-      const pass = document.getElementById('signupPass').value;
-      try {
-        const userCred = await createUserWithEmailAndPassword(auth, email, pass);
-        updateStatus(`حساب مُنشأ: ${userCred.user.uid}\nالمرجو تفعيل البريد قبل تفعيل MFA`);
-      } catch (err) {
-        updateStatus('خطأ في الإنشاء: ' + err.message);
-      }
-    });
-
-    // ======== Enroll (إضافة رقم هاتف كعامل ثانٍ) =========
-    // إعداد reCAPTCHA خاص بعملية التسجيل (enrollment)
-    let enrollRecaptchaVerifier = null;
-    function ensureEnrollRecaptcha() {
-      if (!enrollRecaptchaVerifier) {
-        enrollRecaptchaVerifier = new RecaptchaVerifier('recaptcha-enroll', {
-          size: 'invisible'
-        }, auth);
-      }
-      return enrollRecaptchaVerifier;
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.className = 'message ' + (type || '');
+      messageBox.style.display = 'block';
+    }
+    function hideMessage() {
+      messageBox.style.display = 'none';
+    }
+    function setLoading(btn, loading, original) {
+      btn.disabled = loading;
+      if (loading) btn.textContent = 'جاري المعالجة...';
+      else btn.textContent = original;
     }
 
-    document.getElementById('btnSendEnroll').addEventListener('click', async () => {
-      try {
-        const user = auth.currentUser;
-        if (!user) throw new Error('سجّل الدخول أولًا كمستخدم لتضيف رقم الهاتف.');
-
-        // 1) إحضار جلسة multi-factor الخاصة بالمستخدم
-        const mfaSession = await multiFactor(user).getSession();
-
-        // 2) إعداد reCAPTCHA وطلب إرسال رمز SMS مرتبط بجلسة الـ MFA
-        const phoneNumber = document.getElementById('enrollPhone').value;
-        ensureEnrollRecaptcha();
-        const verifier = enrollRecaptchaVerifier;
-
-        // إنشاء Provider لارسال SMS ضمن جلسة MFA
-        const phoneProvider = new PhoneAuthProvider(auth);
-        const verificationId = await phoneProvider.verifyPhoneNumber({
-          phoneNumber,
-          multiFactorSession: mfaSession,
-          // بعد إصدار المكتبة، الطريقة قد تطلب set of options — هنا نستخدم الشكل البسيط
-          // في حال واجهتك أخطاء، راجع docs (الرابط أسفل)
-        }, verifier);
-
-        // حفظ verificationId مؤقتًا في الـ DOM (أو state)
-        window._enrollVerificationId = verificationId;
-        updateStatus('تم إرسال رمز التسجيل إلى الهاتف. أدخله ثم اضغط إكمال إضافة الهاتف.');
-      } catch (err) {
-        updateStatus('خطأ أثناء الإرسال: ' + err.message);
+    async function sendOTP() {
+      hideMessage();
+      const phone = phoneInput.value.trim();
+      if (!phone || !phone.startsWith('+')) {
+        showMessage('الرجاء إدخال رقم صحيح مع رمز الدولة (مثال: +9677...).', 'error');
+        return;
       }
-    });
 
-    document.getElementById('btnCompleteEnroll').addEventListener('click', async () => {
-      try {
-        const code = document.getElementById('enrollCode').value;
-        const verificationId = window._enrollVerificationId;
-        if (!verificationId) throw new Error('لم يتم إرسال رمز التسجيل بعد.');
-        // إنشاء PhoneAuthCredential من الـ verificationId + code
-        const cred = PhoneAuthProvider.credential(verificationId, code);
-        const assertion = PhoneMultiFactorGenerator.assertion(cred);
-
-        // enroll العامل الثاني للمستخدم الحالي
-        const user = auth.currentUser;
-        await multiFactor(user).enroll(assertion, "هاتف المستخدم");
-        updateStatus('تمت إضافة الهاتف كعامل ثانٍ بنجاح.');
-      } catch (err) {
-        updateStatus('خطأ أثناء إكمال التسجيل: ' + err.message);
-      }
-    });
-
-    // ======== Signin (تسجيل الدخول ومعالجة MFA) =========
-    let currentResolver = null;
-    document.getElementById('btnLogin').addEventListener('click', async () => {
-      const email = document.getElementById('loginEmail').value;
-      const pass = document.getElementById('loginPass').value;
+      const orig = sendOtpBtn.textContent;
+      setLoading(sendOtpBtn, true, orig);
 
       try {
-        // محاولة تسجيل دخول عادي
-        await signInWithEmailAndPassword(auth, email, pass);
-        updateStatus('تم تسجيل الدخول بدون طلب عامل ثانٍ.');
-      } catch (err) {
-        // في حال كان الخطأ متعلق بـ multi-factor سيعطينا resolver
-        // في مكتبة Moduler: يجب استخرج resolver بواسطة getMultiFactorResolver
-        // لاحظ: الخطأ قد يكون نسخة مكتبية مختلفة حسب إصدار الـ SDK؛ هنا نحاول التعامل العام
-        try {
-          // الحصول على MultiFactor Resolver (إن وُجد)
-          // الخطوة: Firebase تُرمز الخطأ وتضع response.rawUserCredential أو معلومات مماثلة
-          // أفضل طريقة: استعمل getMultiFactorResolver(err) عندما يدعمها SDK
-          currentResolver = getMultiFactorResolver(auth, err);
-        } catch (e) {
-          currentResolver = null;
+        // إذا عرّفت PROXY_SEND يستعمله (آمن)، وإلا يجرب الاستدعاء المباشر لHypersender (غير آمن)
+        const url = PROXY_SEND || SEND_OTP_URL;
+        const headers = { 'Content-Type': 'application/json' };
+        if (!PROXY_SEND && API_KEY) headers['Authorization'] = `Bearer ${API_KEY}`;
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ phone })
+        });
+
+        const data = await res.json().catch(()=>null);
+
+        if (!res.ok) {
+          // محاولة قراءة رسالة مفهومة من الجسم، وإلا عرض رمز الحالة
+          const errMsg = (data && (data.message || data.error)) || `فشل: ${res.status}`;
+          throw new Error(errMsg);
         }
 
-        if (currentResolver) {
-          updateStatus('هذا الحساب مُفعّل بـ MFA. جارٍ إرسال رمز إلى الهاتف المُسجَّل...');
-          // نأخذ أول hint (المعلومات عن العامل الثاني)
-          const hint = currentResolver.hints[0]; // غالبًا PhoneMultiFactorInfo
-          // أرسل رمز SMS باستخدام PhoneAuthProvider مع resolver.session
-          const phoneProvider = new PhoneAuthProvider(auth);
-          // نستخدم نفس reCAPTCHA (يمكن استخدام واحد عام)
-          const verifier = new RecaptchaVerifier(document.createElement('div'), { size: 'invisible' }, auth);
-          const verificationId = await phoneProvider.verifyPhoneNumber({
-            phoneNumber: hint.phoneNumber,
-            multiFactorSession: currentResolver.session
-          }, verifier);
+        // نجاح الإرسال
+        showMessage('تم إرسال رمز التحقق إلى هاتفك.', 'success');
+        phoneSection.style.display = 'none';
+        otpSection.style.display = 'block';
+        otpInput.focus();
 
-          // خزّن verificationId مؤقتًا
-          window._signinVerificationId = verificationId;
+      } catch (err) {
+        showMessage(err.message || 'حدث خطأ أثناء إرسال الرمز.', 'error');
+        console.error('sendOTP error:', err);
+      } finally {
+        setLoading(sendOtpBtn, false, orig);
+      }
+    }
 
-          // أظهر مربع إدخال الكود في الواجهة
-          document.getElementById('mfaPrompt').style.display = 'block';
-          updateStatus('أُرسل رمز. أدخله لإكمال الدخول.');
+    async function verifyAndDelete() {
+      hideMessage();
+      const phone = phoneInput.value.trim();
+      const code = otpInput.value.trim();
+      if (!code || code.length < 3) {
+        showMessage('أدخل رمز تحقق صالح.', 'error');
+        return;
+      }
+
+      const orig = verifyOtpBtn.textContent;
+      setLoading(verifyOtpBtn, true, orig);
+
+      try {
+        const url = PROXY_VERIFY || VERIFY_OTP_URL;
+        const headers = { 'Content-Type': 'application/json' };
+        if (!PROXY_VERIFY && API_KEY) headers['Authorization'] = `Bearer ${API_KEY}`;
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ phone, code })
+        });
+
+        const data = await res.json().catch(()=>null);
+
+        if (!res.ok) {
+          const errMsg = (data && (data.message || data.error)) || `فشل: ${res.status}`;
+          throw new Error(errMsg);
+        }
+
+        // تحقق ناجح؟ (تعتمد على حقل الاستجابة من Hypersender)
+        const ok = (data && (data.verified === true || data.success === true)) || false;
+
+        if (ok) {
+          otpSection.style.display = 'none';
+          phoneSection.style.display = 'none';
+          messageBox.style.display = 'none';
+          finalMessageSection.style.display = 'block';
+          // ملاحظة: هنا يمكنك إضافة استدعاء آخر لخادمك لحذف/جدولة الحذف فعليًا
         } else {
-          updateStatus('خطأ أثناء تسجيل الدخول: ' + err.message);
+        // إن لم ترجع Hypersender حقل واضح، حاول إظهار رسالة من body
+          const msg = (data && (data.message || data.error)) || 'الرمز غير صحيح أو منتهي الصلاحية.';
+          showMessage(msg, 'error');
         }
-      }
-    });
 
-    // بعد إدخال كود الـ MFA لإكمال الدخول
-    document.getElementById('btnFinishSignin').addEventListener('click', async () => {
-      try {
-        const code = document.getElementById('mfaCode').value;
-        const verificationId = window._signinVerificationId;
-        if (!verificationId || !currentResolver) throw new Error('لا يوجد جلسة MFA نشطة.');
-
-        const cred = PhoneAuthProvider.credential(verificationId, code);
-        const assertion = PhoneMultiFactorGenerator.assertion(cred);
-
-        // إكمال عملية تسجيل الدخول عبر resolver
-        await currentResolver.resolveSignIn(assertion);
-        updateStatus('تم تسجيل الدخول بنجاح باستخدام MFA.');
-        document.getElementById('mfaPrompt').style.display = 'none';
       } catch (err) {
-        updateStatus('فشل إكمال تسجيل الدخول: ' + err.message);
+        showMessage(err.message || 'حدث خطأ أثناء التحقق.', 'error');
+       console.error('verifyAndDelete error:', err);
+      } finally {
+        setLoading(verifyOtpBtn, false, orig);
       }
-    });
-
-    // تهيئة الأحداث العامة للحالة
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        updateStatus(`مستخدَم مسجَّل: ${user.email} (UID: ${user.uid})`);
-      } else {
-        updateStatus('غير متصل');
-      }
-    });
-
+    }
   </script>
 </body>
 </html>
