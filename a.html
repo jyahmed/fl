@@ -1,163 +1,201 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حذف الحساب</title>
-    <style>
-        /* نفس تصميم CSS لم يتغير */
-        body { font-family: 'Cairo', sans-serif; line-height: 1.8; color: #333; background-color: #f4f7f6; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { max-width: 500px; width: 100%; background-color: #fff; padding: 30px 40px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-        h1 { color: #d9534f; text-align: center; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; }
-        input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; text-align: left; direction: ltr; }
-        button { width: 100%; padding: 14px; border: none; border-radius: 8px; background-color: #0275d8; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s; }
-        button:disabled { background-color: #a0a0a0; cursor: not-allowed; }
-        .message { padding: 15px; margin-top: 20px; border-radius: 8px; text-align: center; display: none; }
-        .success { background-color: #d4edda; color: #155724; }
-        .error { background-color: #f8d7da; color: #721c24; }
-        #otp-section { display: none; }
-        #final-message-section { display: none; text-align: center; }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>حذف الحساب عبر Hypersender — صفحة واحدة</title>
+  <style>
+    body { font-family: 'Cairo', sans-serif; line-height:1.8; color:#333; background:#f4f7f6; margin:0; padding:20px;
+           display:flex; justify-content:center; align-items:center; min-height:100vh; }
+    .container { max-width:500px; width:100%; background:#fff; padding:30px 40px; border-radius:12px;
+                 box-shadow:0 6px 20px rgba(0,0,0,.08); }
+    h1 { color:#d9534f; text-align:center; margin:0 0 12px 0; }
+    .form-group { margin-bottom:18px; }
+    label { display:block; margin-bottom:8px; font-weight:bold; }
+    input { width:100%; padding:12px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; direction:ltr; text-align:left; }
+    button { width:100%; padding:14px; border:none; border-radius:8px; background:#0275d8; color:#fff; font-size:16px; font-weight:700; cursor:pointer; }
+    button:disabled { background:#a0a0a0; cursor:not-allowed; }
+    .message { padding:14px; margin-top:18px; border-radius:8px; text-align:center; display:none; }
+    .success { background:#d4edda; color:#155724; }
+    .error { background:#f8d7da; color:#721c24; }
+    #otp-section { display:none; }
+    #final-message-section { display:none; text-align:center; }
+    .note { font-size:13px; color:#666; margin-top:10px; text-align:center; }
+    .small { font-size:12px; color:#666; margin-top:6px; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>حذف الحساب نهائياً</h1>
-        <div id="message-box" class="message"></div>
+  <div class="container" role="main">
+    <h1>حذف الحساب نهائياً</h1>
 
-        <div id="phone-section">
-            <p>أدخل رقم هاتفك المسجل لدينا لبدء عملية الحذف.</p>
-            <div class="form-group">
-                <label for="phone">رقم الهاتف (بدون رمز الدولة )</label>
-                <input type="tel" id="phone" placeholder="7xxxxxxxx">
-            </div>
-            <button id="send-otp-btn" onclick="sendOTP()">إرسال رمز التحقق</button>
-        </div>
+    <div id="message-box" class="message"></div>
 
-        <div id="otp-section">
-            <p>لقد أرسلنا رمزًا إلى رقمك. يرجى إدخاله أدناه.</p>
-            <div class="form-group">
-                <label for="otp">رمز التحقق (OTP)</label>
-                <input type="text" id="otp" placeholder="xxxxxx" inputmode="numeric" autocomplete="one-time-code">
-            </div>
-            <button id="verify-otp-btn" onclick="verifyAndDelete()">تأكيد وحذف الحساب</button>
-        </div>
-
-        <div id="final-message-section">
-            <h2 class="success">تم استلام طلبك بنجاح</h2>
-            <p>لقد قمت بطلب حذف حسابك. سيتم الاحتفاظ ببياناتك لمدة 10 أيام، إذا لم تقم بتسجيل الدخول خلال هذه الفترة، سيتم حذف بياناتك بشكل نهائي.</p>
-        </div>
+    <div id="phone-section">
+      <p>أدخل رقم هاتفك مع رمز الدولة لاستخدام Hypersender في إرسال رمز OTP.</p>
+      <div class="form-group">
+        <label for="phone">رقم الهاتف (مثال: +9677XXXXXXXX)</label>
+        <input id="phone" type="tel" placeholder="+9677XXXXXXXX" />
+      </div>
+      <button id="send-otp-btn" onclick="sendOTP()">إرسال رمز التحقق</button>
+      <div class="note small">ملاحظة: من الأفضل أن تكون طلبات Hypersender من الخادم (proxy) لحماية مفتاح الـ API.</div>
     </div>
 
-    <script>
-        // =================================================================
-        // ===              روابط دوال الخادم الآمنة                  ===
-        // =================================================================
-        // استبدل هذه الروابط إذا تغيرت في المستقبل
-        const START_VERIFICATION_URL = "https://startaccountdeletionverification-hzaw42xaq-zf.a.run.app";
-        const SCHEDULE_DELETION_URL = "https://scheduleaccountdeletion-hzaw42xiaq-zf.a.run.app"; // تم التحديث إلى الدالة الصحيحة
-        // =================================================================
+    <div id="otp-section">
+      <p>أدخل رمز الـ OTP المستلم:</p>
+      <div class="form-group">
+        <label for="otp">رمز التحقق</label>
+        <input id="otp" type="text" placeholder="xxxxxx" inputmode="numeric" autocomplete="one-time-code" />
+      </div>
+      <button id="verify-otp-btn" onclick="verifyAndDelete()">تأكيد وحذف الحساب</button>
+    </div>
 
-        // عناصر الواجهة
-        const phoneInput = document.getElementById('phone' );
-        const otpInput = document.getElementById('otp');
-        const sendOtpBtn = document.getElementById('send-otp-btn');
-        const verifyOtpBtn = document.getElementById('verify-otp-btn');
-        const messageBox = document.getElementById('message-box');
-        const phoneSection = document.getElementById('phone-section');
-        const otpSection = document.getElementById('otp-section');
-        const finalMessageSection = document.getElementById('final-message-section');
+    <div id="final-message-section">
+      <h2 class="success">تم جدولة حذف الحساب</h2>
+      <p>تم التحقق بنجاح. سيتم حذف بياناتك نهائيًا بعد الفترة المحددة إذا لم تقم بتسجيل الدخول.</p>
+    </div>
+  </div>
 
-        function showMessage(text, type) {
-            messageBox.textContent = text;
-            messageBox.className = `message ${type}`;
-            messageBox.style.display = 'block';
+  <script>
+    // -----------------------------
+    // أدخل هنا معرّف الانستانس الذي زودتني به
+    // -----------------------------
+    const INSTANCE_ID = "a0039162-ee15-49c9-a7d0-fc7d1686cf0d";
+    // -----------------------------
+    // ملاحظة: اترك API_KEY فارغ أو ضع مفتاح للاختبار المحلي فقط.
+    // الأفضل أن لا تضع مفتاحًا في الكود على بيئة الإنتاج.
+    const API_KEY = ""; // <-- ضع مفتاحك هنا فقط للاختبار المحلي إن أردت
+
+    // افتراض مسارات send/verify — عدّل إذا كان في حسابك مسار مختلف.
+    const SEND_OTP_URL = `https://app.hypersender.com/instances/${INSTANCE_ID}/send-otp`;
+    const VERIFY_OTP_URL = `https://app.hypersender.com/instances/${INSTANCE_ID}/verify-otp`;
+
+    // بديل آمن: ضع هنا مسار proxy على خادمك (موصى به)
+    // مثال: const PROXY_SEND = '/api/hypersender/send-otp';
+    //         const PROXY_VERIFY = '/api/hypersender/verify-otp';
+    const PROXY_SEND = null;   // اذا أردت استخدام proxy ضع هنا المسار كـ string
+    const PROXY_VERIFY = null; // مثال: '/api/verify-otp'
+
+    // عناصر DOM
+    const phoneInput = document.getElementById('phone');
+    const otpInput = document.getElementById('otp');
+    const sendOtpBtn = document.getElementById('send-otp-btn');
+    const verifyOtpBtn = document.getElementById('verify-otp-btn');
+    const messageBox = document.getElementById('message-box');
+    const phoneSection = document.getElementById('phone-section');
+    const otpSection = document.getElementById('otp-section');
+    const finalMessageSection = document.getElementById('final-message-section');
+
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.className = 'message ' + (type || '');
+      messageBox.style.display = 'block';
+    }
+    function hideMessage() {
+      messageBox.style.display = 'none';
+    }
+    function setLoading(btn, loading, original) {
+      btn.disabled = loading;
+      if (loading) btn.textContent = 'جاري المعالجة...';
+      else btn.textContent = original;
+    }
+
+    async function sendOTP() {
+      hideMessage();
+      const phone = phoneInput.value.trim();
+      if (!phone || !phone.startsWith('+')) {
+        showMessage('الرجاء إدخال رقم صحيح مع رمز الدولة (مثال: +9677...).', 'error');
+        return;
+      }
+
+      const orig = sendOtpBtn.textContent;
+      setLoading(sendOtpBtn, true, orig);
+
+      try {
+        // إذا عرّفت PROXY_SEND يستعمله (آمن)، وإلا يجرب الاستدعاء المباشر لHypersender (غير آمن)
+        const url = PROXY_SEND || SEND_OTP_URL;
+        const headers = { 'Content-Type': 'application/json' };
+        if (!PROXY_SEND && API_KEY) headers['Authorization'] = `Bearer ${API_KEY}`;
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ phone })
+        });
+
+        const data = await res.json().catch(()=>null);
+
+        if (!res.ok) {
+          // محاولة قراءة رسالة مفهومة من الجسم، وإلا عرض رمز الحالة
+          const errMsg = (data && (data.message || data.error)) || `فشل: ${res.status}`;
+          throw new Error(errMsg);
         }
 
-        function setLoading(button, isLoading, originalText) {
-            button.disabled = isLoading;
-            button.textContent = isLoading ? 'جاري المعالجة...' : originalText;
+        // نجاح الإرسال
+        showMessage('تم إرسال رمز التحقق إلى هاتفك.', 'success');
+        phoneSection.style.display = 'none';
+        otpSection.style.display = 'block';
+        otpInput.focus();
+
+      } catch (err) {
+        showMessage(err.message || 'حدث خطأ أثناء إرسال الرمز.', 'error');
+        console.error('sendOTP error:', err);
+      } finally {
+        setLoading(sendOtpBtn, false, orig);
+      }
+    }
+
+    async function verifyAndDelete() {
+      hideMessage();
+      const phone = phoneInput.value.trim();
+      const code = otpInput.value.trim();
+      if (!code || code.length < 3) {
+        showMessage('أدخل رمز تحقق صالح.', 'error');
+        return;
+      }
+
+      const orig = verifyOtpBtn.textContent;
+      setLoading(verifyOtpBtn, true, orig);
+
+      try {
+        const url = PROXY_VERIFY || VERIFY_OTP_URL;
+        const headers = { 'Content-Type': 'application/json' };
+        if (!PROXY_VERIFY && API_KEY) headers['Authorization'] = `Bearer ${API_KEY}`;
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ phone, code })
+        });
+
+        const data = await res.json().catch(()=>null);
+
+        if (!res.ok) {
+          const errMsg = (data && (data.message || data.error)) || `فشل: ${res.status}`;
+          throw new Error(errMsg);
         }
 
-        async function sendOTP() {
-            const phone = phoneInput.value.trim();
-            if (!/^(71|78|73|70|77)[0-9]{7}$/.test(phone)) {
-                showMessage('الرجاء إدخال رقم هاتف يمني صحيح.', 'error');
-                return;
-            }
+        // تحقق ناجح؟ (تعتمد على حقل الاستجابة من Hypersender)
+        const ok = (data && (data.verified === true || data.success === true)) || false;
 
-            const originalBtnText = sendOtpBtn.textContent;
-            setLoading(sendOtpBtn, true, originalBtnText);
-            messageBox.style.display = 'none';
-
-            try {
-                // استدعاء دالة الخادم الآمنة لإرسال الرمز
-                const response = await fetch(START_VERIFICATION_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone: phone })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    // إذا لم تكن الاستجابة ناجحة، استخدم رسالة الخطأ من الخادم
-                    throw new Error(data.error || 'حدث خطأ غير متوقع.');
-                }
-
-                showMessage('تم إرسال رمز التحقق بنجاح.', 'success');
-                phoneSection.style.display = 'none';
-                otpSection.style.display = 'block';
-                otpInput.focus(); // تحسين: التركيز على حقل الرمز
-
-            } catch (error) {
-                showMessage(error.message, 'error');
-            } finally {
-                setLoading(sendOtpBtn, false, originalBtnText);
-            }
+        if (ok) {
+          otpSection.style.display = 'none';
+          phoneSection.style.display = 'none';
+          messageBox.style.display = 'none';
+          finalMessageSection.style.display = 'block';
+          // ملاحظة: هنا يمكنك إضافة استدعاء آخر لخادمك لحذف/جدولة الحذف فعليًا
+        } else {
+          // إن لم ترجع Hypersender حقل واضح، حاول إظهار رسالة من body
+          const msg = (data && (data.message || data.error)) || 'الرمز غير صحيح أو منتهي الصلاحية.';
+          showMessage(msg, 'error');
         }
 
-        async function verifyAndDelete() {
-            const phone = phoneInput.value.trim();
-            const code = otpInput.value.trim();
-
-            if (code.length < 4) {
-                showMessage('الرجاء إدخال رمز تحقق صحيح.', 'error');
-                return;
-            }
-
-            const originalBtnText = verifyOtpBtn.textContent;
-            setLoading(verifyOtpBtn, true, originalBtnText);
-            messageBox.style.display = 'none';
-
-            try {
-                // استدعاء دالة الخادم الآمنة للتحقق وجدولة الحذف
-                const response = await fetch(SCHEDULE_DELETION_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone: phone, code: code })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'حدث خطأ أثناء التحقق.');
-                }
-
-                // إظهار رسالة النجاح النهائية
-                otpSection.style.display = 'none';
-                document.querySelector('h1').style.display = 'none';
-                messageBox.style.display = 'none';
-                finalMessageSection.style.display = 'block';
-
-            } catch (error) {
-                showMessage(error.message, 'error');
-            } finally {
-                setLoading(verifyOtpBtn, false, originalBtnText);
-            }
-        }
-    </script>
+      } catch (err) {
+        showMessage(err.message || 'حدث خطأ أثناء التحقق.', 'error');
+        console.error('verifyAndDelete error:', err);
+      } finally {
+        setLoading(verifyOtpBtn, false, orig);
+      }
+    }
+  </script>
 </body>
 </html>
