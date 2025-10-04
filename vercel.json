@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "functions": {
+    "send-otp.js": {
+      "runtime": "vercel-node@18.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/send-otp",
+      "destination": "/send-otp.js"
+    }
+  ]
+}
